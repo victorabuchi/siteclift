@@ -56,3 +56,20 @@ body {
   color: #f59e0b;
   border-bottom-color: #f59e0b;
 }
+
+.mkt-btn-primary {
+  transition: background 0.12s;
+}
+
+.mkt-btn-primary:hover {
+  background: #d97706 !important;
+}
+
+.mkt-btn-outline {
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.mkt-btn-outline:hover {
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+}

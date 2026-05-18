@@ -16,7 +16,8 @@ const navItems = [
   { href: '/dashboard/account', label: 'Account' },
 ];
 
-function getInitials(name: string): string {
+function getInitials(name: string | undefined | null): string {
+  if (!name) return 'U';
   const parts = name.trim().split(/\s+/);
   if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
   return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
@@ -140,7 +141,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 whiteSpace: 'nowrap',
               }}
             >
-              {user.name}
+              {user?.name}
             </span>
           )}
 

@@ -33,3 +33,24 @@ body {
   background: #fcd34d;
   cursor: not-allowed;
 }
+
+.sidebar-link {
+  display: block;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #64748b;
+  text-decoration: none;
+  border-left: 3px solid transparent;
+  transition: background 0.1s;
+}
+
+.sidebar-link:hover {
+  background: #f8fafc;
+}
+
+.sidebar-link.active {
+  border-left-color: #f59e0b;
+  background: #fffbeb;
+  color: #d97706;
+}

@@ -1,178 +1,182 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
-import { themes, categories, type Theme } from './themes-data';
+import { themes, type Theme } from './themes-data';
 
-function ThemePreview({ colors }: { colors: { from: string; to: string } }) {
+const CATEGORY_IMAGES: Record<string, string> = {
+  Restaurant: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80',
+  Clinic: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80',
+  'Law Firm': 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&q=80',
+  Gym: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80',
+  Portfolio: 'https://images.unsplash.com/photo-1545665277-5937489579f2?w=600&q=80',
+  eCommerce: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600&q=80',
+  'Real Estate': 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80',
+  Hotel: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80',
+  'Beauty Salon': 'https://images.unsplash.com/photo-1560066984-138daaa4e4e6?w=600&q=80',
+  Education: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80',
+  'Tech Startup': 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&q=80',
+  Photography: 'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=600&q=80',
+};
+
+const INDUSTRY_OPTIONS = [
+  'Restaurant',
+  'Clinic',
+  'Law Firm',
+  'Gym',
+  'Portfolio',
+  'eCommerce',
+  'Real Estate',
+  'Hotel',
+  'Beauty Salon',
+  'Education',
+  'Tech Startup',
+  'Photography',
+];
+
+function CheckboxItem({
+  checked,
+  onChange,
+  label,
+  count,
+}: {
+  checked: boolean;
+  onChange: () => void;
+  label: string;
+  count: number;
+}) {
   return (
     <div
+      onClick={onChange}
       style={{
-        height: '200px',
-        background: `linear-gradient(135deg, ${colors.from}, ${colors.to})`,
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center',
-        padding: '16px',
+        gap: '8px',
+        cursor: 'pointer',
+        userSelect: 'none',
+        padding: '4px 0',
       }}
     >
       <div
         style={{
-          width: '100%',
-          borderRadius: '6px 6px 0 0',
-          overflow: 'hidden',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.28)',
-          background: '#ffffff',
+          width: '16px',
+          height: '16px',
+          border: `1px solid ${checked ? '#1a1a2e' : '#d1d5db'}`,
+          borderRadius: '3px',
+          background: checked ? '#1a1a2e' : '#ffffff',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexShrink: 0,
         }}
       >
-        <div
-          style={{
-            height: '22px',
-            background: '#f1f5f9',
-            display: 'flex',
-            alignItems: 'center',
-            padding: '0 8px',
-            gap: '4px',
-          }}
-        >
-          {['#fca5a5', '#fde68a', '#bbf7d0'].map((c) => (
-            <div
-              key={c}
-              style={{ width: '6px', height: '6px', borderRadius: '50%', background: c }}
-            />
-          ))}
-          <div
-            style={{
-              marginLeft: '6px',
-              flex: 1,
-              height: '9px',
-              background: '#e2e8f0',
-              borderRadius: '3px',
-            }}
-          />
-        </div>
-        <div
-          style={{
-            padding: '8px 10px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '5px',
-          }}
-        >
-          <div
-            style={{
-              height: '18px',
-              background: colors.from,
-              borderRadius: '3px',
-              opacity: 0.3,
-            }}
-          />
-          <div
-            style={{ height: '6px', background: '#e2e8f0', borderRadius: '3px', width: '78%' }}
-          />
-          <div
-            style={{ height: '6px', background: '#e2e8f0', borderRadius: '3px', width: '56%' }}
-          />
-          <div style={{ display: 'flex', gap: '6px', marginTop: '2px' }}>
-            <div
-              style={{
-                flex: 2,
-                height: '26px',
-                background: colors.from,
-                borderRadius: '3px',
-                opacity: 0.22,
-              }}
-            />
-            <div
-              style={{
-                flex: 1,
-                height: '26px',
-                background: '#f8fafc',
-                borderRadius: '3px',
-                border: '1px solid #e2e8f0',
-              }}
-            />
-          </div>
-        </div>
+        {checked && (
+          <span
+            style={{ color: '#ffffff', fontSize: '9px', fontWeight: 700, lineHeight: '1' }}
+          >
+            ✓
+          </span>
+        )}
       </div>
+      <span style={{ fontSize: '13px', color: '#374151', flex: 1 }}>{label}</span>
+      <span style={{ fontSize: '12px', color: '#9ca3af' }}>({count})</span>
+    </div>
+  );
+}
+
+function SidebarSection({
+  title,
+  open,
+  onToggle,
+  children,
+}: {
+  title: string;
+  open: boolean;
+  onToggle: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <div style={{ marginBottom: '8px' }}>
+      <button
+        onClick={onToggle}
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          width: '100%',
+          background: 'none',
+          border: 'none',
+          borderTop: '1px solid #e2e8f0',
+          cursor: 'pointer',
+          padding: '14px 0',
+          textAlign: 'left',
+        }}
+      >
+        <span style={{ fontSize: '14px', fontWeight: 600, color: '#1a1a2e' }}>{title}</span>
+        <span style={{ fontSize: '10px', color: '#6b7280' }}>{open ? '▼' : '▶'}</span>
+      </button>
+      {open && <div style={{ paddingBottom: '8px' }}>{children}</div>}
     </div>
   );
 }
 
 function ThemeCard({ theme }: { theme: Theme }) {
+  const imgSrc = CATEGORY_IMAGES[theme.category];
+
   return (
     <div
       style={{
         background: '#ffffff',
         borderRadius: '8px',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04)',
         overflow: 'hidden',
-        display: 'flex',
-        flexDirection: 'column',
-        position: 'relative',
+        boxShadow: '0 1px 2px rgba(0,0,0,0.08)',
+        cursor: 'pointer',
       }}
     >
-      <ThemePreview colors={theme.colors} />
+      <Link
+        href={`/marketplace/${theme.slug}`}
+        style={{
+          display: 'block',
+          position: 'relative',
+          height: '220px',
+          textDecoration: 'none',
+        }}
+      >
+        <Image
+          src={imgSrc}
+          alt={theme.name}
+          fill
+          style={{ objectFit: 'cover' }}
+          sizes='(max-width: 1400px) 33vw, 400px'
+        />
+      </Link>
 
-      {theme.featured && (
-        <div
-          style={{
-            position: 'absolute',
-            top: '12px',
-            right: '12px',
-            background: '#f59e0b',
-            color: '#ffffff',
-            padding: '3px 10px',
-            borderRadius: '20px',
-            fontSize: '11px',
-            fontWeight: 700,
-            letterSpacing: '0.02em',
-          }}
-        >
-          Featured
-        </div>
-      )}
-
-      <div style={{ padding: '18px 20px 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <span
-          style={{
-            display: 'inline-block',
-            padding: '2px 10px',
-            borderRadius: '20px',
-            fontSize: '11px',
-            fontWeight: 600,
-            background: '#f8fafc',
-            color: '#64748b',
-            border: '1px solid #e2e8f0',
-            marginBottom: '8px',
-          }}
-        >
-          {theme.category}
-        </span>
-
+      <div style={{ padding: '12px 16px' }}>
         <div
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-            alignItems: 'flex-start',
-            marginBottom: '6px',
+            alignItems: 'center',
+            marginBottom: '8px',
           }}
         >
-          <h3
+          <Link
+            href={`/marketplace/${theme.slug}`}
             style={{
-              fontSize: '16px',
-              fontWeight: 700,
+              fontSize: '15px',
+              fontWeight: 600,
               color: '#1a1a2e',
-              margin: 0,
+              textDecoration: 'none',
             }}
           >
             {theme.name}
-          </h3>
+          </Link>
           <span
             style={{
-              fontSize: '15px',
-              fontWeight: 700,
-              color: theme.price === 0 ? '#16a34a' : '#1a1a2e',
+              fontSize: '13px',
+              color: theme.price === 0 ? '#16a34a' : '#64748b',
+              fontWeight: theme.price === 0 ? 600 : 400,
               whiteSpace: 'nowrap',
               marginLeft: '8px',
             }}
@@ -184,54 +188,43 @@ function ThemeCard({ theme }: { theme: Theme }) {
         <div
           style={{
             display: 'flex',
+            justifyContent: 'space-between',
             alignItems: 'center',
-            gap: '4px',
-            marginBottom: '16px',
           }}
         >
-          <span style={{ color: '#f59e0b', fontSize: '13px', letterSpacing: '1px' }}>
-            {'★★★★★'}
-          </span>
-          <span style={{ fontSize: '12px', color: '#64748b' }}>{theme.rating}</span>
-        </div>
-
-        <div style={{ display: 'flex', gap: '8px', marginTop: 'auto' }}>
-          <Link
-            href={`/marketplace/${theme.slug}`}
-            className='mkt-btn-outline'
-            style={{
-              flex: 1,
-              display: 'block',
-              padding: '9px 0',
-              textAlign: 'center',
-              fontSize: '13px',
-              fontWeight: 600,
-              color: '#1a1a2e',
-              background: '#ffffff',
-              border: '1px solid #e2e8f0',
-              borderRadius: '7px',
-              textDecoration: 'none',
-            }}
-          >
-            Preview
-          </Link>
+          <div style={{ minHeight: '24px', display: 'flex', alignItems: 'center' }}>
+            {theme.featured && (
+              <span
+                style={{
+                  display: 'inline-block',
+                  padding: '2px 8px',
+                  borderRadius: '20px',
+                  fontSize: '11px',
+                  fontWeight: 500,
+                  background: '#f3f4f6',
+                  color: '#64748b',
+                }}
+              >
+                NEW
+              </span>
+            )}
+          </div>
           <Link
             href={`/login?theme=${theme.slug}`}
-            className='mkt-btn-primary'
+            className='mkt-btn-outline'
             style={{
-              flex: 1,
-              display: 'block',
-              padding: '9px 0',
-              textAlign: 'center',
+              display: 'inline-block',
+              border: '1px solid #d1d5db',
+              borderRadius: '6px',
+              padding: '6px 16px',
               fontSize: '13px',
-              fontWeight: 600,
-              color: '#ffffff',
-              background: '#f59e0b',
-              borderRadius: '7px',
+              color: '#374151',
+              background: '#ffffff',
               textDecoration: 'none',
+              fontWeight: 500,
             }}
           >
-            Use this theme
+            Add
           </Link>
         </div>
       </div>
@@ -240,122 +233,152 @@ function ThemeCard({ theme }: { theme: Theme }) {
 }
 
 export default function MarketplacePage() {
-  const [activeCategory, setActiveCategory] = useState('All');
-  const [searchQuery, setSearchQuery] = useState('');
+  const [priceFilters, setPriceFilters] = useState<Set<string>>(new Set());
+  const [industryFilters, setIndustryFilters] = useState<Set<string>>(new Set());
+  const [sortBy, setSortBy] = useState('relevance');
+  const [priceOpen, setPriceOpen] = useState(true);
+  const [industryOpen, setIndustryOpen] = useState(true);
 
-  const filtered = themes.filter((theme) => {
-    const matchesSearch =
-      !searchQuery ||
-      theme.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      theme.category.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory =
-      activeCategory === 'All' ||
-      theme.category.toLowerCase() === activeCategory.toLowerCase();
-    return matchesSearch && matchesCategory;
-  });
+  const freeCount = themes.filter((t) => t.price === 0).length;
+  const paidCount = themes.filter((t) => t.price > 0).length;
+
+  function togglePrice(val: string) {
+    setPriceFilters((prev) => {
+      const next = new Set(prev);
+      if (next.has(val)) next.delete(val);
+      else next.add(val);
+      return next;
+    });
+  }
+
+  function toggleIndustry(val: string) {
+    setIndustryFilters((prev) => {
+      const next = new Set(prev);
+      if (next.has(val)) next.delete(val);
+      else next.add(val);
+      return next;
+    });
+  }
+
+  const displayThemes = themes
+    .filter((t) => {
+      const matchesPrice =
+        priceFilters.size === 0 ||
+        (priceFilters.has('free') && t.price === 0) ||
+        (priceFilters.has('paid') && t.price > 0);
+      const matchesIndustry =
+        industryFilters.size === 0 || industryFilters.has(t.category);
+      return matchesPrice && matchesIndustry;
+    })
+    .sort((a, b) => {
+      if (sortBy === 'price-asc') return a.price - b.price;
+      if (sortBy === 'price-desc') return b.price - a.price;
+      return 0;
+    });
 
   return (
-    <div>
-      <section
+    <div
+      style={{
+        display: 'flex',
+        background: '#f4f4f4',
+        minHeight: 'calc(100vh - 60px)',
+        alignItems: 'flex-start',
+      }}
+    >
+      <aside
         style={{
-          background: 'linear-gradient(180deg, #fffbeb 0%, #f8fafc 100%)',
-          padding: '72px 32px 56px',
-          textAlign: 'center',
+          width: '260px',
+          flexShrink: 0,
+          background: '#ffffff',
+          borderRight: '1px solid #e2e8f0',
+          padding: '24px',
+          position: 'sticky',
+          top: '60px',
+          maxHeight: 'calc(100vh - 60px)',
+          overflowY: 'auto',
+          alignSelf: 'flex-start',
         }}
       >
         <h1
           style={{
-            fontSize: '40px',
-            fontWeight: 800,
+            fontSize: '24px',
+            fontWeight: 700,
             color: '#1a1a2e',
-            margin: '0 auto 16px',
-            lineHeight: '1.15',
-            maxWidth: '700px',
+            margin: '0 0 20px 0',
           }}
         >
-          Find the perfect theme for your brand
+          Browse all themes
         </h1>
-        <p
+
+        <SidebarSection
+          title='Price'
+          open={priceOpen}
+          onToggle={() => setPriceOpen((v) => !v)}
+        >
+          <CheckboxItem
+            checked={priceFilters.has('free')}
+            onChange={() => togglePrice('free')}
+            label='Free'
+            count={freeCount}
+          />
+          <CheckboxItem
+            checked={priceFilters.has('paid')}
+            onChange={() => togglePrice('paid')}
+            label='Paid'
+            count={paidCount}
+          />
+        </SidebarSection>
+
+        <SidebarSection
+          title='Industry'
+          open={industryOpen}
+          onToggle={() => setIndustryOpen((v) => !v)}
+        >
+          {INDUSTRY_OPTIONS.map((cat) => (
+            <CheckboxItem
+              key={cat}
+              checked={industryFilters.has(cat)}
+              onChange={() => toggleIndustry(cat)}
+              label={cat}
+              count={themes.filter((t) => t.category === cat).length}
+            />
+          ))}
+        </SidebarSection>
+      </aside>
+
+      <main style={{ flex: 1, padding: '32px' }}>
+        <div
           style={{
-            fontSize: '18px',
-            color: '#64748b',
-            margin: '0 auto 36px',
-            maxWidth: '540px',
-            lineHeight: '1.6',
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
           }}
         >
-          Browse professionally designed themes for every business type. Switch anytime, your
-          content stays.
-        </p>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <input
-            type='text'
-            placeholder='Search themes by name or category...'
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+          <span style={{ fontSize: '14px', color: '#64748b' }}>
+            1-{displayThemes.length} of {themes.length} themes
+          </span>
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
             style={{
-              width: '100%',
-              maxWidth: '600px',
-              padding: '14px 20px',
-              fontSize: '15px',
               border: '1px solid #e2e8f0',
-              borderRadius: '12px',
-              outline: 'none',
+              borderRadius: '6px',
+              padding: '8px 12px',
+              fontSize: '13px',
+              color: '#374151',
               background: '#ffffff',
-              boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
-              color: '#1a1a2e',
-              boxSizing: 'border-box',
+              cursor: 'pointer',
+              outline: 'none',
             }}
-          />
+          >
+            <option value='relevance'>Relevance</option>
+            <option value='newest'>Newest</option>
+            <option value='price-asc'>Price low to high</option>
+            <option value='price-desc'>Price high to low</option>
+          </select>
         </div>
-      </section>
 
-      <div
-        style={{
-          borderBottom: '1px solid #e2e8f0',
-          background: '#ffffff',
-          padding: '0 32px',
-          overflowX: 'auto',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        <div style={{ display: 'inline-flex', gap: '8px', padding: '14px 0' }}>
-          {categories.map((cat) => {
-            const isActive = cat === activeCategory;
-            return (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  padding: '6px 16px',
-                  borderRadius: '20px',
-                  fontSize: '13px',
-                  fontWeight: 500,
-                  cursor: 'pointer',
-                  border: isActive ? 'none' : '1px solid #e2e8f0',
-                  background: isActive ? '#f59e0b' : '#ffffff',
-                  color: isActive ? '#ffffff' : '#64748b',
-                  transition: 'all 0.1s',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                {cat}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      <div
-        style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          padding: '40px 32px',
-        }}
-      >
-        {filtered.length === 0 ? (
+        {displayThemes.length === 0 ? (
           <div
             style={{
               textAlign: 'center',
@@ -364,26 +387,23 @@ export default function MarketplacePage() {
               fontSize: '15px',
             }}
           >
-            No themes found for{' '}
-            <strong style={{ color: '#1a1a2e' }}>
-              {searchQuery || activeCategory}
-            </strong>
-            . Try a different search or category.
+            No themes match the selected filters.
           </div>
         ) : (
           <div
             style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(3, 1fr)',
-              gap: '24px',
+              gap: '16px',
+              marginTop: '24px',
             }}
           >
-            {filtered.map((theme) => (
+            {displayThemes.map((theme) => (
               <ThemeCard key={theme.slug} theme={theme} />
             ))}
           </div>
         )}
-      </div>
+      </main>
     </div>
   );
 }

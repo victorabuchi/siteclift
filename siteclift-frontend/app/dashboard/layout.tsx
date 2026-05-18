@@ -5,21 +5,30 @@ import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth';
 
-interface SidebarUser {
+interface NavUser {
   name: string;
   email: string;
 }
 
 const navItems = [
-  { href: '/dashboard', label: 'Dashboard', exact: true },
-  { href: '/dashboard/websites', label: 'My Websites', exact: false },
-  { href: '/marketplace', label: 'Theme Marketplace', exact: false },
-  { href: '/dashboard/themes', label: 'My Themes', exact: false },
-  { href: '/dashboard/account', label: 'Account', exact: false },
+  { href: '/dashboard', label: 'My Sites' },
+  { href: '/marketplace', label: 'Themes' },
+  { href: '/dashboard/account', label: 'Account' },
 ];
 
-function isActiveLink(href: string, exact: boolean, pathname: string): boolean {
-  if (exact) return pathname === href;
+function getInitials(name: string): string {
+  const parts = name.trim().split(/\s+/);
+  if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
+  return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
+}
+
+function isActiveNav(href: string, pathname: string): boolean {
+  if (href === '/dashboard') {
+    return (
+      pathname === '/dashboard' ||
+      (pathname.startsWith('/dashboard/') && !pathname.startsWith('/dashboard/account'))
+    );
+  }
   return pathname === href || pathname.startsWith(href + '/');
 }
 
@@ -28,7 +37,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const pathname = usePathname();
   const { logout } = useAuth();
   const [ready, setReady] = useState(false);
-  const [user, setUser] = useState<SidebarUser | null>(null);
+  const [user, setUser] = useState<NavUser | null>(null);
 
   useEffect(() => {
     const token = localStorage.getItem('siteclift_token');
@@ -55,32 +64,40 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   if (!ready) return null;
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh' }}>
-      <aside
+    <div style={{ minHeight: '100vh', background: '#f8fafc' }}>
+      <header
         style={{
-          position: 'fixed',
+          position: 'sticky',
           top: 0,
-          left: 0,
-          bottom: 0,
-          width: '240px',
+          height: '60px',
           background: '#ffffff',
-          borderRight: '1px solid #e2e8f0',
+          borderBottom: '1px solid #e2e8f0',
+          zIndex: 100,
           display: 'flex',
-          flexDirection: 'column',
-          zIndex: 10,
+          alignItems: 'center',
+          padding: '0 32px',
         }}
       >
-        <div style={{ padding: '24px 20px', flexShrink: 0 }}>
+        <Link href='/dashboard' style={{ textDecoration: 'none', flexShrink: 0 }}>
           <span style={{ fontSize: '20px', fontWeight: 700, color: '#1a1a2e' }}>Site</span>
           <span style={{ fontSize: '20px', fontWeight: 700, color: '#f59e0b' }}>clift</span>
-        </div>
+        </Link>
 
-        <nav style={{ flex: 1, paddingTop: '8px' }}>
-          {navItems.map(({ href, label, exact }) => (
+        <nav
+          style={{
+            position: 'absolute',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            alignItems: 'stretch',
+            height: '60px',
+          }}
+        >
+          {navItems.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
-              className={`sidebar-link${isActiveLink(href, exact, pathname) ? ' active' : ''}`}
+              className={`topnav-link${isActiveNav(href, pathname) ? ' active' : ''}`}
             >
               {label}
             </Link>
@@ -89,70 +106,61 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
         <div
           style={{
-            padding: '20px',
-            borderTop: '1px solid #e2e8f0',
+            marginLeft: 'auto',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
             flexShrink: 0,
           }}
         >
+          <div
+            style={{
+              width: '34px',
+              height: '34px',
+              borderRadius: '50%',
+              background: '#f59e0b',
+              color: '#ffffff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '12px',
+              fontWeight: 700,
+              flexShrink: 0,
+            }}
+          >
+            {user ? getInitials(user.name) : '?'}
+          </div>
+
           {user && (
-            <>
-              <div
-                style={{
-                  fontSize: '14px',
-                  fontWeight: 600,
-                  color: '#1a1a2e',
-                  marginBottom: '2px',
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                {user.name}
-              </div>
-              <div
-                style={{
-                  fontSize: '12px',
-                  color: '#64748b',
-                  marginBottom: '12px',
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                {user.email}
-              </div>
-            </>
+            <span
+              style={{
+                fontSize: '14px',
+                fontWeight: 500,
+                color: '#1a1a2e',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {user.name}
+            </span>
           )}
+
           <button
             onClick={handleSignOut}
             style={{
-              width: '100%',
-              padding: '8px 12px',
-              fontSize: '13px',
-              fontWeight: 500,
-              color: '#64748b',
-              background: 'transparent',
-              border: '1px solid #e2e8f0',
-              borderRadius: '8px',
+              background: 'none',
+              border: 'none',
               cursor: 'pointer',
+              fontSize: '13px',
+              color: '#64748b',
+              padding: '4px 0',
             }}
           >
             Sign out
           </button>
         </div>
-      </aside>
+      </header>
 
-      <main
-        style={{
-          marginLeft: '240px',
-          background: '#f8fafc',
-          padding: '32px',
-          minHeight: '100vh',
-          flex: 1,
-        }}
-      >
-        {children}
-      </main>
+      <main style={{ minHeight: 'calc(100vh - 60px)' }}>{children}</main>
     </div>
   );
 }

@@ -14,8 +14,8 @@ const CATEGORY_IMAGES: Record<string, string> = {
   eCommerce: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600&q=80',
   'Real Estate': 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80',
   Hotel: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&q=80',
-  'Beauty Salon': 'https://images.unsplash.com/photo-1560066984-138daaa4e4e6?w=600&q=80',
-  Education: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80',
+  'Beauty Salon': 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80',
+  Education: 'https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=600&q=80',
   'Tech Startup': 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&q=80',
   Photography: 'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=600&q=80',
 };

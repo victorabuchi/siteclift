@@ -1,8 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import api from '@/lib/api';
+import { themes } from '../marketplace/themes-data';
 
 interface Website {
   id: string;
@@ -14,10 +16,22 @@ interface Website {
   updated_at?: string;
 }
 
+const FEATURED_THEMES = ['restaurant-pro', 'glow-beauty', 'shop-base']
+  .map((slug) => themes.find((t) => t.slug === slug))
+  .filter(Boolean) as (typeof themes)[number][];
+
+const THEME_IMAGES: Record<string, string> = {
+  Restaurant: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80',
+  'Beauty Salon': 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80',
+  eCommerce: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600&q=80',
+};
+
+const HERO_PREVIEW = 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80';
+
 function formatDate(dateStr?: string): string {
-  if (!dateStr) return 'Unknown';
+  if (!dateStr) return 'just now';
   const date = new Date(dateStr);
-  if (isNaN(date.getTime())) return 'Unknown';
+  if (isNaN(date.getTime())) return 'just now';
   const diffDays = Math.floor((Date.now() - date.getTime()) / 86400000);
   if (diffDays === 0) return 'today';
   if (diffDays === 1) return 'yesterday';
@@ -26,274 +40,491 @@ function formatDate(dateStr?: string): string {
   return `${Math.floor(diffDays / 365)} years ago`;
 }
 
-function StatusBadge({ status }: { status: string }) {
-  const isLive = status === 'live';
-  return (
-    <span
-      style={{
-        display: 'inline-block',
-        padding: '2px 10px',
-        borderRadius: '20px',
-        fontSize: '11px',
-        fontWeight: 600,
-        background: isLive ? '#dcfce7' : '#f1f5f9',
-        color: isLive ? '#16a34a' : '#64748b',
-      }}
-    >
-      {isLive ? 'Live' : 'Draft'}
-    </span>
-  );
-}
+function AnalyticsBar() {
+  const cols = [
+    { label: 'Page views', value: '0' },
+    { label: 'Unique visitors', value: '0' },
+    { label: 'Sessions', value: '0' },
+    { label: 'Conversion rate', value: '0%' },
+  ];
 
-function WebsiteCard({ site }: { site: Website }) {
-  const displayDomain = site.domain || site.subdomain || 'No domain set';
   return (
     <div
       style={{
         background: '#ffffff',
         borderRadius: '8px',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04)',
-        overflow: 'hidden',
+        padding: '20px 24px',
+        marginBottom: '24px',
         display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      <div style={{ height: '4px', background: '#f59e0b' }} />
-
-      <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'flex-start',
-            marginBottom: '6px',
-          }}
-        >
-          <h3
-            style={{
-              fontSize: '16px',
-              fontWeight: 600,
-              color: 'var(--color-text)',
-              margin: 0,
-            }}
-          >
-            {site.name}
-          </h3>
-          <StatusBadge status={site.status} />
-        </div>
-
-        <div
-          style={{
-            fontSize: '13px',
-            color: 'var(--color-muted)',
-            marginBottom: '14px',
-          }}
-        >
-          {displayDomain}
-        </div>
-
-        <div style={{ fontSize: '13px', color: 'var(--color-muted)', marginBottom: '6px' }}>
-          Theme:{' '}
-          <span style={{ color: 'var(--color-text)', fontWeight: 500 }}>
-            {site.theme_name || 'None'}
-          </span>
-        </div>
-
-        <div style={{ fontSize: '12px', color: '#94a3b8', marginBottom: '20px', flex: 1 }}>
-          Updated {formatDate(site.updated_at)}
-        </div>
-
-        <div style={{ display: 'flex', gap: '8px' }}>
-          <Link
-            href={`/dashboard/websites/${site.id}`}
-            style={{
-              flex: 1,
-              display: 'block',
-              padding: '8px 0',
-              textAlign: 'center',
-              fontSize: '13px',
-              fontWeight: 600,
-              color: 'var(--color-text)',
-              background: 'var(--color-surface)',
-              border: '1px solid var(--color-border)',
-              borderRadius: '6px',
-              textDecoration: 'none',
-            }}
-          >
-            Edit
-          </Link>
-          <Link
-            href={`/dashboard/websites/${site.id}/themes`}
-            style={{
-              flex: 1,
-              display: 'block',
-              padding: '8px 0',
-              textAlign: 'center',
-              fontSize: '13px',
-              fontWeight: 600,
-              color: 'var(--color-primary)',
-              background: '#fffbeb',
-              border: '1px solid #fde68a',
-              borderRadius: '6px',
-              textDecoration: 'none',
-            }}
-          >
-            Switch Theme
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function BrowserMockup() {
-  return (
-    <div
-      style={{
-        width: '260px',
-        height: '190px',
-        borderRadius: '12px',
-        border: '1px solid #e2e8f0',
-        overflow: 'hidden',
-        background: '#f8fafc',
-        margin: '0 auto 32px',
-        boxShadow: '0 4px 24px rgba(0,0,0,0.07)',
+        alignItems: 'center',
       }}
     >
       <div
         style={{
-          height: '36px',
-          background: '#e2e8f0',
           display: 'flex',
           alignItems: 'center',
-          padding: '0 12px',
           gap: '6px',
+          paddingRight: '24px',
+          flexShrink: 0,
         }}
       >
-        {['#fca5a5', '#fde68a', '#bbf7d0'].map((color) => (
-          <div
-            key={color}
-            style={{ width: '8px', height: '8px', borderRadius: '50%', background: color }}
-          />
-        ))}
-        <div
-          style={{
-            marginLeft: '8px',
-            flex: 1,
-            height: '16px',
-            background: '#fff',
-            borderRadius: '4px',
-            opacity: 0.7,
-          }}
-        />
+        <svg
+          width="15"
+          height="15"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#64748b"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+          <line x1="16" y1="2" x2="16" y2="6" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+        </svg>
+        <span style={{ fontSize: '13px', fontWeight: 600, color: '#64748b' }}>30 days</span>
       </div>
+
+      {cols.map((col) => (
+        <div
+          key={col.label}
+          style={{
+            flex: 1,
+            borderLeft: '1px solid #e2e8f0',
+            paddingLeft: '24px',
+            paddingRight: '24px',
+          }}
+        >
+          <div style={{ fontSize: '13px', color: '#64748b', marginBottom: '4px' }}>{col.label}</div>
+          <div style={{ fontSize: '22px', fontWeight: 700, color: '#1a1a2e' }}>{col.value}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function CurrentThemeSection({ website }: { website: Website | null }) {
+  if (!website) {
+    return (
       <div
         style={{
-          padding: '14px 16px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '10px',
+          background: '#ffffff',
+          borderRadius: '8px',
+          overflow: 'hidden',
+          marginBottom: '24px',
         }}
       >
         <div
-          style={{ height: '28px', background: '#f59e0b', borderRadius: '6px', opacity: 0.28 }}
-        />
+          style={{
+            padding: '14px 20px',
+            borderBottom: '1px solid #e2e8f0',
+          }}
+        >
+          <span style={{ fontSize: '14px', fontWeight: 700, color: '#1a1a2e' }}>Current theme</span>
+        </div>
         <div
-          style={{ height: '9px', background: '#cbd5e1', borderRadius: '4px', width: '75%' }}
-        />
-        <div
-          style={{ height: '9px', background: '#cbd5e1', borderRadius: '4px', width: '55%' }}
-        />
-        <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
-          <div
+          style={{
+            padding: '48px 32px',
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <svg
+            width="120"
+            height="88"
+            viewBox="0 0 120 88"
+            fill="none"
+            stroke="#d1d5db"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            style={{ marginBottom: '20px' }}
+          >
+            <rect x="4" y="4" width="112" height="80" rx="6" />
+            <line x1="4" y1="22" x2="116" y2="22" />
+            <circle cx="15" cy="13" r="3" />
+            <circle cx="26" cy="13" r="3" />
+            <circle cx="37" cy="13" r="3" />
+            <line x1="22" y1="40" x2="98" y2="40" />
+            <line x1="22" y1="54" x2="78" y2="54" />
+          </svg>
+          <p style={{ fontSize: '14px', color: '#64748b', margin: '0 0 18px 0', lineHeight: '1.6' }}>
+            No active theme. Browse the marketplace to get started.
+          </p>
+          <Link
+            href="/marketplace"
             style={{
-              flex: 1,
-              height: '40px',
+              padding: '9px 20px',
               background: '#f59e0b',
-              borderRadius: '6px',
-              opacity: 0.18,
+              color: '#ffffff',
+              borderRadius: '8px',
+              textDecoration: 'none',
+              fontSize: '14px',
+              fontWeight: 600,
             }}
-          />
-          <div
-            style={{
-              flex: 1,
-              height: '40px',
-              background: '#ffffff',
-              borderRadius: '6px',
-              border: '1px solid #e2e8f0',
-            }}
+          >
+            Browse themes
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      style={{
+        background: '#ffffff',
+        borderRadius: '8px',
+        overflow: 'hidden',
+        marginBottom: '24px',
+      }}
+    >
+      <div style={{ padding: '14px 20px', borderBottom: '1px solid #e2e8f0' }}>
+        <span style={{ fontSize: '14px', fontWeight: 700, color: '#1a1a2e' }}>Current theme</span>
+      </div>
+
+      <div style={{ display: 'flex', height: '280px' }}>
+        <div style={{ flex: 1, position: 'relative' }}>
+          <Image
+            src={HERO_PREVIEW}
+            alt="Theme preview"
+            fill
+            style={{ objectFit: 'cover' }}
+            sizes="800px"
+            priority
           />
         </div>
+        <div
+          style={{
+            width: '108px',
+            background: '#f8fafc',
+            borderLeft: '1px solid #e2e8f0',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <div
+            style={{
+              width: '64px',
+              height: '116px',
+              border: '2px solid #1a1a2e',
+              borderRadius: '10px',
+              overflow: 'hidden',
+              background: '#ffffff',
+            }}
+          >
+            <div
+              style={{
+                height: '10px',
+                background: '#1a1a2e',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <div
+                style={{
+                  width: '16px',
+                  height: '2px',
+                  background: 'rgba(255,255,255,0.35)',
+                  borderRadius: '1px',
+                }}
+              />
+            </div>
+            <div style={{ position: 'relative', height: '106px', overflow: 'hidden' }}>
+              <Image
+                src={HERO_PREVIEW}
+                alt="Mobile preview"
+                fill
+                style={{ objectFit: 'cover' }}
+                sizes="64px"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        style={{
+          padding: '12px 20px',
+          borderTop: '1px solid #e2e8f0',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px',
+        }}
+      >
+        <div style={{ flex: 1 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ fontSize: '14px', fontWeight: 700, color: '#1a1a2e' }}>
+              {website.theme_name || 'Custom Theme'}
+            </span>
+            <span
+              style={{
+                padding: '2px 8px',
+                borderRadius: '4px',
+                fontSize: '11px',
+                fontWeight: 600,
+                background: '#f1f5f9',
+                color: '#64748b',
+              }}
+            >
+              Current theme
+            </span>
+          </div>
+          <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '3px' }}>
+            Last saved: {formatDate(website.updated_at)}
+          </div>
+        </div>
+        <button
+          style={{
+            width: '36px',
+            height: '36px',
+            border: '1px solid #e2e8f0',
+            borderRadius: '6px',
+            background: '#ffffff',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0,
+          }}
+        >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="#1a1a2e"
+            stroke="none"
+          >
+            <circle cx="12" cy="5" r="1.5" />
+            <circle cx="12" cy="12" r="1.5" />
+            <circle cx="12" cy="19" r="1.5" />
+          </svg>
+        </button>
+        <Link
+          href={`/dashboard/websites/${website.id}`}
+          style={{
+            padding: '9px 18px',
+            background: '#1a1a2e',
+            color: '#ffffff',
+            borderRadius: '8px',
+            textDecoration: 'none',
+            fontSize: '13px',
+            fontWeight: 600,
+            whiteSpace: 'nowrap',
+          }}
+        >
+          Edit theme
+        </Link>
       </div>
     </div>
   );
 }
 
-function EmptyState() {
+function DraftThemesSection() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '80px 32px',
-        textAlign: 'center',
-      }}
-    >
-      <BrowserMockup />
-
-      <h2
+    <div style={{ marginBottom: '24px' }}>
+      <div
         style={{
-          fontSize: '22px',
-          fontWeight: 700,
-          color: 'var(--color-text)',
-          margin: '0 0 10px 0',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '12px',
         }}
       >
-        Build your first website
-      </h2>
-      <p
+        <h2 style={{ fontSize: '15px', fontWeight: 700, color: '#1a1a2e', margin: 0 }}>
+          Draft themes
+        </h2>
+        <button
+          style={{
+            padding: '7px 14px',
+            border: '1px solid #e2e8f0',
+            borderRadius: '6px',
+            background: '#ffffff',
+            fontSize: '13px',
+            fontWeight: 600,
+            color: '#1a1a2e',
+            cursor: 'pointer',
+          }}
+        >
+          Import
+        </button>
+      </div>
+      <div
         style={{
-          fontSize: '15px',
-          color: 'var(--color-muted)',
-          margin: '0 0 28px 0',
-          maxWidth: '360px',
-          lineHeight: '1.6',
+          background: '#ffffff',
+          borderRadius: '8px',
+          padding: '20px',
+          textAlign: 'center',
         }}
       >
-        Choose a theme from our marketplace and launch in minutes
-      </p>
+        <span style={{ fontSize: '14px', color: '#64748b' }}>No draft themes</span>
+      </div>
+    </div>
+  );
+}
 
-      <div style={{ display: 'flex', gap: '12px' }}>
+function DiscoverThemesSection() {
+  const [query, setQuery] = useState('');
+
+  return (
+    <div>
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '14px',
+        }}
+      >
+        <h2 style={{ fontSize: '15px', fontWeight: 700, color: '#1a1a2e', margin: 0 }}>
+          Discover themes
+        </h2>
         <Link
-          href='/marketplace'
-          style={{
-            padding: '11px 24px',
-            background: 'var(--color-primary)',
-            color: '#ffffff',
-            borderRadius: '8px',
-            textDecoration: 'none',
-            fontSize: '14px',
-            fontWeight: 600,
-          }}
+          href="/marketplace"
+          style={{ fontSize: '13px', fontWeight: 600, color: '#f59e0b', textDecoration: 'none' }}
         >
-          Browse themes
+          Visit Marketplace
         </Link>
-        <Link
-          href='/dashboard/websites/new'
-          style={{
-            padding: '11px 24px',
-            background: 'var(--color-text)',
-            color: '#ffffff',
-            borderRadius: '8px',
-            textDecoration: 'none',
-            fontSize: '14px',
-            fontWeight: 600,
-          }}
-        >
-          Start from scratch
-        </Link>
+      </div>
+
+      <div
+        style={{
+          background: '#ffffff',
+          borderRadius: '8px',
+          padding: '20px',
+          marginBottom: '16px',
+        }}
+      >
+        <div style={{ fontSize: '14px', fontWeight: 600, color: '#1a1a2e', marginBottom: '4px' }}>
+          Generate a custom storefront
+        </div>
+        <div style={{ fontSize: '13px', color: '#64748b', marginBottom: '14px' }}>
+          Describe your business to get tailored theme options
+        </div>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="e.g. modern Italian restaurant"
+            style={{
+              flex: 1,
+              padding: '9px 12px',
+              border: '1px solid #e2e8f0',
+              borderRadius: '6px',
+              fontSize: '13px',
+              color: '#1a1a2e',
+              outline: 'none',
+              background: '#ffffff',
+            }}
+          />
+          <Link
+            href="/marketplace"
+            style={{
+              padding: '9px 18px',
+              background: '#f59e0b',
+              color: '#ffffff',
+              borderRadius: '6px',
+              textDecoration: 'none',
+              fontSize: '13px',
+              fontWeight: 600,
+              whiteSpace: 'nowrap',
+              display: 'inline-flex',
+              alignItems: 'center',
+            }}
+          >
+            Find themes
+          </Link>
+        </div>
+      </div>
+
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '16px',
+        }}
+      >
+        {FEATURED_THEMES.map((theme) => {
+          const imgSrc = THEME_IMAGES[theme.category] ?? THEME_IMAGES.Restaurant;
+          return (
+            <div
+              key={theme.slug}
+              style={{
+                background: '#ffffff',
+                borderRadius: '8px',
+                overflow: 'hidden',
+                boxShadow: '0 1px 2px rgba(0,0,0,0.08)',
+              }}
+            >
+              <Link
+                href={`/marketplace/${theme.slug}`}
+                style={{ display: 'block', position: 'relative', height: '200px', textDecoration: 'none' }}
+              >
+                <Image
+                  src={imgSrc}
+                  alt={theme.name}
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  sizes="(max-width: 1100px) 33vw, 340px"
+                />
+              </Link>
+              <div
+                style={{
+                  padding: '12px 16px',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <div>
+                  <Link
+                    href={`/marketplace/${theme.slug}`}
+                    style={{
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      color: '#1a1a2e',
+                      textDecoration: 'none',
+                      display: 'block',
+                      marginBottom: '2px',
+                    }}
+                  >
+                    {theme.name}
+                  </Link>
+                  <span
+                    style={{
+                      fontSize: '12px',
+                      color: theme.price === 0 ? '#16a34a' : '#64748b',
+                      fontWeight: theme.price === 0 ? 600 : 400,
+                    }}
+                  >
+                    {theme.price === 0 ? 'Free' : `€${theme.price}`}
+                  </span>
+                </div>
+                <Link
+                  href={`/login?theme=${theme.slug}`}
+                  style={{
+                    display: 'inline-block',
+                    border: '1px solid #d1d5db',
+                    borderRadius: '6px',
+                    padding: '6px 16px',
+                    fontSize: '13px',
+                    color: '#374151',
+                    background: '#ffffff',
+                    textDecoration: 'none',
+                    fontWeight: 500,
+                  }}
+                >
+                  Add
+                </Link>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -307,80 +538,23 @@ export default function DashboardPage() {
     api
       .get('/api/websites')
       .then(({ data }) => {
-        const list = Array.isArray(data)
-          ? data
-          : (data?.websites ?? data?.data ?? []);
+        const list = Array.isArray(data) ? data : (data?.websites ?? data?.data ?? []);
         setWebsites(list);
       })
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
 
-  return (
-    <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '40px 32px' }}>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          marginBottom: '40px',
-        }}
-      >
-        <h1
-          style={{
-            fontSize: '28px',
-            fontWeight: 700,
-            color: 'var(--color-text)',
-            margin: 0,
-          }}
-        >
-          Your websites
-        </h1>
-        <Link
-          href='/dashboard/websites/new'
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '6px',
-            padding: '10px 20px',
-            background: 'var(--color-primary)',
-            color: '#ffffff',
-            borderRadius: '8px',
-            textDecoration: 'none',
-            fontSize: '14px',
-            fontWeight: 600,
-          }}
-        >
-          + New website
-        </Link>
-      </div>
+  const currentSite = websites.length > 0 ? websites[0] : null;
 
-      {loading ? (
-        <div
-          style={{
-            textAlign: 'center',
-            padding: '80px',
-            color: 'var(--color-muted)',
-            fontSize: '14px',
-          }}
-        >
-          Loading...
-        </div>
-      ) : websites.length === 0 ? (
-        <EmptyState />
-      ) : (
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: '24px',
-          }}
-        >
-          {websites.map((site) => (
-            <WebsiteCard key={site.id} site={site} />
-          ))}
-        </div>
-      )}
+  return (
+    <div style={{ background: '#f4f4f4', minHeight: 'calc(100vh - 60px)', padding: '32px' }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+        <AnalyticsBar />
+        <CurrentThemeSection website={loading ? null : currentSite} />
+        <DraftThemesSection />
+        <DiscoverThemesSection />
+      </div>
     </div>
   );
 }

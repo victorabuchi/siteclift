@@ -187,7 +187,7 @@ const CATEGORY_REVIEWS: Record<string, Review[]> = {
   ],
   Clinic: [
     { name: 'Dr. Anya P.', date: 'Apr 2026', text: 'Patients frequently compliment our website. The services listing and appointment form have meaningfully streamlined our intake process.' },
-    { name: 'Tom R.', date: 'Mar 2026', text: 'The trust signals built into this theme — testimonials, certifications, calm layout — have noticeably increased consultation bookings week on week.' },
+    { name: 'Tom R.', date: 'Mar 2026', text: 'The trust signals built into this theme (testimonials, certifications, calm layout) have noticeably increased consultation bookings week on week.' },
     { name: 'Fatima Z.', date: 'Feb 2026', text: 'Our old site looked outdated and clinical in the wrong way. This theme is professional yet warm. Patients feel reassured before they even arrive.' },
     { name: 'Liam C.', date: 'Jan 2026', text: 'The opening hours widget and team profiles were exactly what we needed. Setup was straightforward and the outcome looks truly professional.' },
   ],
@@ -201,7 +201,7 @@ const CATEGORY_REVIEWS: Record<string, Review[]> = {
     { name: 'Mike F.', date: 'Apr 2026', text: 'New member signups are up 40% since we launched this theme. The class schedule and pricing sections do all the selling before people even call us.' },
     { name: 'Keisha D.', date: 'Mar 2026', text: 'Our trainers love their profile pages. The transformation gallery has been fantastic for social proof and drives genuine interest from new visitors.' },
     { name: 'Jack T.', date: 'Feb 2026', text: 'Clean, high-energy design that matches our brand perfectly. The mobile layout is buttery smooth and members use it every day to check the timetable.' },
-    { name: 'Yuki S.', date: 'Jan 2026', text: 'Setting up the class timetable took under an hour. Members now check it online daily rather than calling the front desk — huge time saver.' },
+    { name: 'Yuki S.', date: 'Jan 2026', text: 'Setting up the class timetable took under an hour. Members now check it online daily rather than calling the front desk, saving us hours each week.' },
   ],
   Portfolio: [
     { name: 'Ella C.', date: 'Apr 2026', text: 'Clients consistently comment on how impressive my portfolio looks. Inquiries have doubled since I switched and my average project value has risen too.' },
@@ -225,7 +225,7 @@ const CATEGORY_REVIEWS: Record<string, Review[]> = {
     { name: 'Isabella T.', date: 'Apr 2026', text: 'Direct bookings increased by 35% within 60 days of launch. The room gallery and booking section are absolutely stunning and guests comment on it.' },
     { name: 'Raj N.', date: 'Mar 2026', text: 'Guests often tell us our website convinced them to choose us over a larger chain. The theme sets exactly the right tone of quiet luxury.' },
     { name: 'Claire M.', date: 'Feb 2026', text: 'The events and wedding packages page has been a genuine game-changer for our events business. Enquiries we never received before now arrive weekly.' },
-    { name: 'Paul G.', date: 'Jan 2026', text: 'The amenities showcase and dining sections paint a complete picture. Guests arrive with accurate expectations — which we consistently exceed.' },
+    { name: 'Paul G.', date: 'Jan 2026', text: 'The amenities showcase and dining sections paint a complete picture. Guests arrive with accurate expectations, and we consistently exceed them.' },
   ],
   'Beauty Salon': [
     { name: 'Mia R.', date: 'Apr 2026', text: 'Online bookings now account for 70% of our appointments. The stylist selection feature makes clients feel special and invested before they even arrive.' },
@@ -249,7 +249,7 @@ const CATEGORY_REVIEWS: Record<string, Review[]> = {
     { name: 'Alex T.', date: 'Apr 2026', text: 'My booking rate doubled within two months of switching to SnapFolio. The full-bleed galleries are breathtaking and clients share the link constantly.' },
     { name: 'Jamie K.', date: 'Mar 2026', text: 'Client proof galleries completely eliminated the back-and-forth email chains. Clients select their images directly online, saving hours of my time.' },
     { name: 'Hana W.', date: 'Feb 2026', text: 'The print shop integration added a revenue stream I didn\'t have before. Setup was seamless and my first print sale came within a week of going live.' },
-    { name: 'Sam R.', date: 'Jan 2026', text: 'The dark, dramatic aesthetic is perfect for my work. Several other photographers have asked which theme I\'m using — always a good sign.' },
+    { name: 'Sam R.', date: 'Jan 2026', text: 'The dark, dramatic aesthetic is perfect for my work. Several other photographers have asked which theme I\'m using. Always a good sign.' },
   ],
 };
 
@@ -304,7 +304,7 @@ export default function ThemeDetailPage() {
   const priceLabel = theme.price === 0 ? 'Free' : `€${theme.price}`;
 
   const PURCHASE_CHECKLIST = [
-    'Instant setup — live in minutes',
+    'Instant setup, live in minutes',
     'Mobile responsive out of the box',
     'SEO optimized from day one',
     'Free theme updates included',
@@ -314,7 +314,7 @@ export default function ThemeDetailPage() {
   return (
     <div style={{ background: C.bg, minHeight: 'calc(100vh - 60px)' }}>
 
-      {/* 1 — STICKY TOP BAR */}
+      {/* 1 - STICKY TOP BAR */}
       <div
         style={{
           position: 'sticky',
@@ -386,7 +386,7 @@ export default function ThemeDetailPage() {
         </div>
       </div>
 
-      {/* 2 — HERO SECTION */}
+      {/* 2 - HERO SECTION */}
       <div
         style={{
           position: 'relative',
@@ -542,7 +542,7 @@ export default function ThemeDetailPage() {
         </div>
       </div>
 
-      {/* 3 — TABS NAV */}
+      {/* 3 - TABS NAV */}
       <div
         style={{
           background: C.white,
@@ -574,7 +574,7 @@ export default function ThemeDetailPage() {
         ))}
       </div>
 
-      {/* 4 — OVERVIEW SECTION */}
+      {/* 4 - OVERVIEW SECTION */}
       <div
         ref={overviewRef}
         style={{
@@ -675,7 +675,7 @@ export default function ThemeDetailPage() {
               {
                 icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>,
                 title: 'One-click switch',
-                desc: 'Switch themes anytime — your content moves with you automatically.',
+                desc: 'Switch themes anytime. Your content moves with you automatically.',
               },
             ].map((card) => (
               <div
@@ -770,7 +770,7 @@ export default function ThemeDetailPage() {
           </div>
         </div>
 
-        {/* Right — Purchase card */}
+        {/* Right - Purchase card */}
         <div
           style={{
             background: C.white,
@@ -793,7 +793,7 @@ export default function ThemeDetailPage() {
             {priceLabel}
           </div>
           <div style={{ fontSize: '13px', color: C.muted, marginBottom: '24px' }}>
-            {theme.price === 0 ? 'Free forever — no card needed' : 'One-time purchase, no subscription'}
+            {theme.price === 0 ? 'Free forever. No card needed.' : 'One-time purchase, no subscription'}
           </div>
 
           <Link
@@ -894,7 +894,7 @@ export default function ThemeDetailPage() {
         </div>
       </div>
 
-      {/* 5 — FEATURES SECTION */}
+      {/* 5 - FEATURES SECTION */}
       <div
         ref={featuresRef}
         style={{
@@ -971,7 +971,7 @@ export default function ThemeDetailPage() {
         </div>
       </div>
 
-      {/* 6 — REVIEWS SECTION */}
+      {/* 6 - REVIEWS SECTION */}
       <div
         ref={reviewsRef}
         style={{
@@ -1170,7 +1170,7 @@ export default function ThemeDetailPage() {
             paddingBottom: '48px',
           }}
         >
-          {/* Column 1 — Wordmark + tagline */}
+          {/* Column 1 - Wordmark + tagline */}
           <div>
             <div style={{ marginBottom: '10px' }}>
               <span style={{ fontSize: '20px', fontWeight: 700, color: C.dark }}>Site</span>
@@ -1181,7 +1181,7 @@ export default function ThemeDetailPage() {
             </p>
           </div>
 
-          {/* Column 2 — Product */}
+          {/* Column 2 - Product */}
           <div>
             <div
               style={{
@@ -1208,7 +1208,7 @@ export default function ThemeDetailPage() {
             </div>
           </div>
 
-          {/* Column 3 — Support */}
+          {/* Column 3 - Support */}
           <div>
             <div
               style={{
@@ -1235,7 +1235,7 @@ export default function ThemeDetailPage() {
             </div>
           </div>
 
-          {/* Column 4 — Company */}
+          {/* Column 4 - Company */}
           <div>
             <div
               style={{

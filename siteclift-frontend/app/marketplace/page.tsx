@@ -35,6 +35,24 @@ const INDUSTRY_OPTIONS = [
   'Photography',
 ];
 
+const CATALOG_SIZE_OPTIONS: { label: string; count: number }[] = [
+  { label: 'One product', count: 2 },
+  { label: 'Few (2-10)', count: 4 },
+  { label: 'Some (11-100+)', count: 4 },
+  { label: 'Lots (500+)', count: 2 },
+];
+
+const FEATURE_OPTIONS: { label: string; count: number }[] = [
+  { label: 'Mobile responsive', count: 12 },
+  { label: 'SEO optimized', count: 10 },
+  { label: 'Fast loading', count: 11 },
+  { label: 'One-click install', count: 12 },
+  { label: 'Content migration', count: 8 },
+  { label: 'Custom domain', count: 12 },
+  { label: 'Analytics ready', count: 9 },
+  { label: 'Multi-language', count: 6 },
+];
+
 function CheckboxItem({
   checked,
   onChange,
@@ -55,7 +73,7 @@ function CheckboxItem({
         gap: '8px',
         cursor: 'pointer',
         userSelect: 'none',
-        padding: '4px 0',
+        padding: '5px 0',
       }}
     >
       <div
@@ -72,15 +90,13 @@ function CheckboxItem({
         }}
       >
         {checked && (
-          <span
-            style={{ color: '#ffffff', fontSize: '9px', fontWeight: 700, lineHeight: '1' }}
-          >
+          <span style={{ color: '#ffffff', fontSize: '9px', fontWeight: 700, lineHeight: '1' }}>
             ✓
           </span>
         )}
       </div>
       <span style={{ fontSize: '13px', color: '#374151', flex: 1 }}>{label}</span>
-      <span style={{ fontSize: '12px', color: '#9ca3af' }}>({count})</span>
+      <span style={{ fontSize: '13px', color: '#9ca3af' }}>{count}</span>
     </div>
   );
 }
@@ -97,7 +113,7 @@ function SidebarSection({
   children: React.ReactNode;
 }) {
   return (
-    <div style={{ marginBottom: '8px' }}>
+    <div style={{ borderBottom: '1px solid #e2e8f0' }}>
       <button
         onClick={onToggle}
         style={{
@@ -107,16 +123,25 @@ function SidebarSection({
           width: '100%',
           background: 'none',
           border: 'none',
-          borderTop: '1px solid #e2e8f0',
           cursor: 'pointer',
-          padding: '14px 0',
+          padding: '16px 0',
           textAlign: 'left',
         }}
       >
         <span style={{ fontSize: '14px', fontWeight: 600, color: '#1a1a2e' }}>{title}</span>
-        <span style={{ fontSize: '10px', color: '#6b7280' }}>{open ? '▼' : '▶'}</span>
+        <span
+          style={{
+            fontSize: '11px',
+            color: '#6b7280',
+            display: 'inline-block',
+            transform: open ? 'rotate(0deg)' : 'rotate(-90deg)',
+            transition: 'transform 0.18s ease',
+          }}
+        >
+          ▼
+        </span>
       </button>
-      {open && <div style={{ paddingBottom: '8px' }}>{children}</div>}
+      {open && <div style={{ paddingBottom: '12px' }}>{children}</div>}
     </div>
   );
 }
@@ -235,9 +260,13 @@ function ThemeCard({ theme }: { theme: Theme }) {
 export default function MarketplacePage() {
   const [priceFilters, setPriceFilters] = useState<Set<string>>(new Set());
   const [industryFilters, setIndustryFilters] = useState<Set<string>>(new Set());
+  const [catalogSizeFilters, setCatalogSizeFilters] = useState<Set<string>>(new Set());
+  const [featureFilters, setFeatureFilters] = useState<Set<string>>(new Set());
   const [sortBy, setSortBy] = useState('relevance');
   const [priceOpen, setPriceOpen] = useState(true);
   const [industryOpen, setIndustryOpen] = useState(true);
+  const [catalogSizeOpen, setCatalogSizeOpen] = useState(true);
+  const [featuresOpen, setFeaturesOpen] = useState(true);
 
   const freeCount = themes.filter((t) => t.price === 0).length;
   const paidCount = themes.filter((t) => t.price > 0).length;
@@ -253,6 +282,24 @@ export default function MarketplacePage() {
 
   function toggleIndustry(val: string) {
     setIndustryFilters((prev) => {
+      const next = new Set(prev);
+      if (next.has(val)) next.delete(val);
+      else next.add(val);
+      return next;
+    });
+  }
+
+  function toggleCatalogSize(val: string) {
+    setCatalogSizeFilters((prev) => {
+      const next = new Set(prev);
+      if (next.has(val)) next.delete(val);
+      else next.add(val);
+      return next;
+    });
+  }
+
+  function toggleFeature(val: string) {
+    setFeatureFilters((prev) => {
       const next = new Set(prev);
       if (next.has(val)) next.delete(val);
       else next.add(val);
@@ -341,6 +388,38 @@ export default function MarketplacePage() {
               onChange={() => toggleIndustry(cat)}
               label={cat}
               count={themes.filter((t) => t.category === cat).length}
+            />
+          ))}
+        </SidebarSection>
+
+        <SidebarSection
+          title='Catalog size'
+          open={catalogSizeOpen}
+          onToggle={() => setCatalogSizeOpen((v) => !v)}
+        >
+          {CATALOG_SIZE_OPTIONS.map(({ label, count }) => (
+            <CheckboxItem
+              key={label}
+              checked={catalogSizeFilters.has(label)}
+              onChange={() => toggleCatalogSize(label)}
+              label={label}
+              count={count}
+            />
+          ))}
+        </SidebarSection>
+
+        <SidebarSection
+          title='Features'
+          open={featuresOpen}
+          onToggle={() => setFeaturesOpen((v) => !v)}
+        >
+          {FEATURE_OPTIONS.map(({ label, count }) => (
+            <CheckboxItem
+              key={label}
+              checked={featureFilters.has(label)}
+              onChange={() => toggleFeature(label)}
+              label={label}
+              count={count}
             />
           ))}
         </SidebarSection>

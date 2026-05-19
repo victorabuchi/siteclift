@@ -1176,6 +1176,7 @@ export default function ThemeDetailPage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
             {moreThemes.map((t) => {
               const img = HERO_IMAGES[t.category] ?? HERO_IMAGES.Restaurant;
+              const thumbsPct = Math.round(t.rating * 20);
               return (
                 <Link
                   key={t.slug}
@@ -1190,7 +1191,7 @@ export default function ThemeDetailPage() {
                     boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
                   }}
                 >
-                  <div style={{ position: 'relative', height: '160px' }}>
+                  <div style={{ position: 'relative', height: '200px' }}>
                     <Image
                       src={img}
                       alt={t.name}
@@ -1202,32 +1203,48 @@ export default function ThemeDetailPage() {
                   <div style={{ padding: '12px 14px' }}>
                     <div
                       style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
+                        fontSize: '15px',
+                        fontWeight: 700,
+                        color: C.dark,
+                        marginBottom: '6px',
                       }}
                     >
-                      <span
-                        style={{
-                          fontSize: '14px',
-                          fontWeight: 700,
-                          color: C.dark,
-                        }}
-                      >
-                        {t.name}
+                      {t.name}
+                    </div>
+                    <div
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                      }}
+                    >
+                      <span style={{ fontSize: '13px', color: C.muted }}>
+                        👍 {thumbsPct}%
                       </span>
+                      {t.featured && (
+                        <span
+                          style={{
+                            padding: '2px 7px',
+                            borderRadius: '4px',
+                            fontSize: '11px',
+                            fontWeight: 600,
+                            background: '#f3f4f6',
+                            color: '#374151',
+                          }}
+                        >
+                          NEW
+                        </span>
+                      )}
                       <span
                         style={{
+                          marginLeft: 'auto',
                           fontSize: '13px',
-                          color: t.price === 0 ? C.green : C.muted,
                           fontWeight: t.price === 0 ? 600 : 400,
+                          color: t.price === 0 ? C.green : C.muted,
                         }}
                       >
                         {t.price === 0 ? 'Free' : `€${t.price}`}
                       </span>
-                    </div>
-                    <div style={{ fontSize: '12px', color: C.muted, marginTop: '3px' }}>
-                      {t.category}
                     </div>
                   </div>
                 </Link>

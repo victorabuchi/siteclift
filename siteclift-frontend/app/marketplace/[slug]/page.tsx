@@ -301,11 +301,6 @@ export default function ThemeDetailPage() {
   const reviews = CATEGORY_REVIEWS[theme.category] ?? CATEGORY_REVIEWS.Restaurant;
   const storeNames = STORE_NAMES[theme.category] ?? STORE_NAMES.Restaurant;
 
-  const moreThemes = [
-    ...themes.filter((t) => t.category === theme.category && t.slug !== theme.slug),
-    ...themes.filter((t) => t.slug !== theme.slug && t.category !== theme.category),
-  ].slice(0, 4);
-
   const priceLabel = theme.price === 0 ? 'Free' : `€${theme.price}`;
 
   const PURCHASE_CHECKLIST = [
@@ -1140,172 +1135,146 @@ export default function ThemeDetailPage() {
         </div>
       </div>
 
-      {/* 7 — MORE THEMES SECTION */}
-      <div
+      {/* FOOTER */}
+      <footer
         style={{
           background: C.white,
           borderTop: `1px solid ${C.border}`,
-          padding: '56px 32px',
+          padding: '48px 0 0',
         }}
       >
-        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginBottom: '28px',
-            }}
-          >
-            <h2 style={{ fontSize: '22px', fontWeight: 800, color: C.dark, margin: 0 }}>
-              More themes for {theme.category}
-            </h2>
-            <Link
-              href="/marketplace"
+        <div
+          style={{
+            maxWidth: '1100px',
+            margin: '0 auto',
+            padding: '0 32px',
+            display: 'grid',
+            gridTemplateColumns: '1.5fr 1fr 1fr 1fr',
+            gap: '40px',
+            paddingBottom: '48px',
+          }}
+        >
+          {/* Column 1 — Wordmark + tagline */}
+          <div>
+            <div style={{ marginBottom: '10px' }}>
+              <span style={{ fontSize: '20px', fontWeight: 700, color: C.dark }}>Site</span>
+              <span style={{ fontSize: '20px', fontWeight: 700, color: C.amber }}>clift</span>
+            </div>
+            <p style={{ fontSize: '14px', color: C.muted, margin: 0, lineHeight: '1.6' }}>
+              Build and switch websites instantly.
+            </p>
+          </div>
+
+          {/* Column 2 — Product */}
+          <div>
+            <div
               style={{
                 fontSize: '13px',
-                fontWeight: 600,
-                color: C.amber,
-                textDecoration: 'none',
+                fontWeight: 700,
+                color: C.dark,
+                marginBottom: '14px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em',
               }}
             >
-              View all →
-            </Link>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px' }}>
-            {moreThemes.map((t) => {
-              const img = HERO_IMAGES[t.category] ?? HERO_IMAGES.Restaurant;
-              const thumbsPct = Math.round(t.rating * 20);
-              return (
+              Product
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {['Marketplace', 'Pricing', 'How it works', 'Theme Builder'].map((label) => (
                 <Link
-                  key={t.slug}
-                  href={`/marketplace/${t.slug}`}
-                  style={{
-                    display: 'block',
-                    background: C.white,
-                    border: `1px solid ${C.border}`,
-                    borderRadius: '10px',
-                    overflow: 'hidden',
-                    textDecoration: 'none',
-                    boxShadow: '0 1px 4px rgba(0,0,0,0.06)',
-                  }}
+                  key={label}
+                  href="/marketplace"
+                  style={{ fontSize: '14px', color: C.muted, textDecoration: 'none' }}
                 >
-                  <div style={{ position: 'relative', height: '200px' }}>
-                    <Image
-                      src={img}
-                      alt={t.name}
-                      fill
-                      style={{ objectFit: 'cover' }}
-                      sizes="(max-width: 1100px) 25vw, 240px"
-                    />
-                  </div>
-                  <div style={{ padding: '12px 14px' }}>
-                    <div
-                      style={{
-                        fontSize: '15px',
-                        fontWeight: 700,
-                        color: C.dark,
-                        marginBottom: '6px',
-                      }}
-                    >
-                      {t.name}
-                    </div>
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                      }}
-                    >
-                      <span style={{ fontSize: '13px', color: C.muted }}>
-                        👍 {thumbsPct}%
-                      </span>
-                      {t.featured && (
-                        <span
-                          style={{
-                            padding: '2px 7px',
-                            borderRadius: '4px',
-                            fontSize: '11px',
-                            fontWeight: 600,
-                            background: '#f3f4f6',
-                            color: '#374151',
-                          }}
-                        >
-                          NEW
-                        </span>
-                      )}
-                      <span
-                        style={{
-                          marginLeft: 'auto',
-                          fontSize: '13px',
-                          fontWeight: t.price === 0 ? 600 : 400,
-                          color: t.price === 0 ? C.green : C.muted,
-                        }}
-                      >
-                        {t.price === 0 ? 'Free' : `€${t.price}`}
-                      </span>
-                    </div>
-                  </div>
+                  {label}
                 </Link>
-              );
-            })}
+              ))}
+            </div>
+          </div>
+
+          {/* Column 3 — Support */}
+          <div>
+            <div
+              style={{
+                fontSize: '13px',
+                fontWeight: 700,
+                color: C.dark,
+                marginBottom: '14px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em',
+              }}
+            >
+              Support
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {['Help Center', 'Contact Us', 'Documentation', 'Status'].map((label) => (
+                <Link
+                  key={label}
+                  href="/marketplace"
+                  style={{ fontSize: '14px', color: C.muted, textDecoration: 'none' }}
+                >
+                  {label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Column 4 — Company */}
+          <div>
+            <div
+              style={{
+                fontSize: '13px',
+                fontWeight: 700,
+                color: C.dark,
+                marginBottom: '14px',
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em',
+              }}
+            >
+              Company
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {['About', 'Blog', 'Careers', 'Privacy Policy'].map((label) => (
+                <Link
+                  key={label}
+                  href="/marketplace"
+                  style={{ fontSize: '14px', color: C.muted, textDecoration: 'none' }}
+                >
+                  {label}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* 8 — FOOTER BANNER */}
-      <div
-        style={{
-          background: C.dark,
-          padding: '72px 32px',
-          textAlign: 'center',
-        }}
-      >
-        <h2
+        {/* Bottom bar */}
+        <div
           style={{
-            fontSize: '36px',
-            fontWeight: 800,
-            color: C.white,
-            margin: '0 0 16px 0',
-            lineHeight: '1.2',
-          }}
-        >
-          Ready to launch your {theme.category.toLowerCase()} website?
-        </h2>
-        <p
-          style={{
-            fontSize: '16px',
-            color: 'rgba(255,255,255,0.65)',
-            margin: '0 0 36px 0',
-            maxWidth: '480px',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            lineHeight: '1.65',
-          }}
-        >
-          Siteclift gives you a professional website in minutes — no developers, no delays, no compromises.
-        </p>
-        <Link
-          href={`/login?theme=${theme.slug}`}
-          style={{
-            display: 'inline-flex',
+            borderTop: `1px solid ${C.border}`,
+            padding: '16px 32px',
+            maxWidth: '1100px',
+            margin: '0 auto',
+            display: 'flex',
+            justifyContent: 'space-between',
             alignItems: 'center',
-            padding: '16px 40px',
-            background: C.amber,
-            color: C.white,
-            borderRadius: '12px',
-            fontSize: '16px',
-            fontWeight: 700,
-            textDecoration: 'none',
           }}
         >
-          Get started with {theme.name} →
-        </Link>
-        <div style={{ marginTop: '20px', fontSize: '13px', color: 'rgba(255,255,255,0.4)' }}>
-          {theme.price === 0 ? 'Free forever. No credit card required.' : 'One-time payment. No ongoing fees.'}
+          <span style={{ fontSize: '13px', color: C.muted }}>
+            2026 Siteclift. All rights reserved.
+          </span>
+          <div style={{ display: 'flex', gap: '20px' }}>
+            {['Terms of Service', 'Privacy Policy'].map((label) => (
+              <Link
+                key={label}
+                href="/marketplace"
+                style={{ fontSize: '13px', color: C.muted, textDecoration: 'none' }}
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
+      </footer>
 
     </div>
   );

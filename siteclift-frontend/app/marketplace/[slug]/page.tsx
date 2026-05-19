@@ -498,7 +498,8 @@ export default function ThemeDetailPage() {
                 maxWidth: '360px',
               }}
             >
-              🔒 siteclift.com/{theme.slug}
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              siteclift.com/{theme.slug}
             </div>
           </div>
         )}
@@ -535,7 +536,7 @@ export default function ThemeDetailPage() {
                 transition: 'all 0.15s',
               }}
             >
-              {d === 'desktop' ? '🖥 Desktop' : '📱 Mobile'}
+              {d === 'desktop' ? 'Desktop' : 'Mobile'}
             </button>
           ))}
         </div>
@@ -619,7 +620,11 @@ export default function ThemeDetailPage() {
               </span>
             )}
             <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-              <span style={{ color: C.amber, fontSize: '14px' }}>{'★★★★★'}</span>
+              <span style={{ display: 'flex', gap: '1px' }}>
+                {[0,1,2,3,4].map((i) => (
+                  <svg key={i} width="13" height="13" viewBox="0 0 24 24" fill="#f59e0b" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                ))}
+              </span>
               <span style={{ fontSize: '13px', color: C.muted }}>{theme.rating}</span>
             </div>
           </div>
@@ -657,9 +662,21 @@ export default function ThemeDetailPage() {
             }}
           >
             {[
-              { icon: '⚡', title: 'Fast setup', desc: 'Go live in minutes with guided onboarding and ready-made sections.' },
-              { icon: '📱', title: 'Mobile ready', desc: 'Every section looks flawless on all screen sizes, right out of the box.' },
-              { icon: '🔄', title: 'One-click switch', desc: 'Switch themes anytime — your content moves with you automatically.' },
+              {
+                icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
+                title: 'Fast setup',
+                desc: 'Go live in minutes with guided onboarding and ready-made sections.',
+              },
+              {
+                icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>,
+                title: 'Mobile ready',
+                desc: 'Every section looks flawless on all screen sizes, right out of the box.',
+              },
+              {
+                icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>,
+                title: 'One-click switch',
+                desc: 'Switch themes anytime — your content moves with you automatically.',
+              },
             ].map((card) => (
               <div
                 key={card.title}
@@ -670,7 +687,7 @@ export default function ThemeDetailPage() {
                   padding: '20px',
                 }}
               >
-                <div style={{ fontSize: '24px', marginBottom: '10px' }}>{card.icon}</div>
+                <div style={{ marginBottom: '10px' }}>{card.icon}</div>
                 <div style={{ fontSize: '14px', fontWeight: 700, color: C.dark, marginBottom: '6px' }}>
                   {card.title}
                 </div>
@@ -845,20 +862,14 @@ export default function ThemeDetailPage() {
                   style={{
                     width: '18px',
                     height: '18px',
-                    borderRadius: '50%',
-                    background: C.amberLight,
-                    border: `1px solid ${C.amberBorder}`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     flexShrink: 0,
-                    fontSize: '10px',
-                    color: C.amberHover,
-                    fontWeight: 700,
                     marginTop: '1px',
                   }}
                 >
-                  ✓
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 </span>
                 {item}
               </div>
@@ -877,7 +888,7 @@ export default function ThemeDetailPage() {
               paddingTop: '16px',
             }}
           >
-            <span>🔒</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#64748b" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             <span>Secure checkout by Siteclift</span>
           </div>
         </div>
@@ -949,7 +960,7 @@ export default function ThemeDetailPage() {
                         lineHeight: '1.4',
                       }}
                     >
-                      <span style={{ color: C.amber, fontWeight: 700, marginTop: '1px', flexShrink: 0 }}>·</span>
+                      <svg width="6" height="6" viewBox="0 0 6 6" style={{ marginTop: '5px', flexShrink: 0 }}><circle cx="3" cy="3" r="2.5" fill="#f59e0b"/></svg>
                       {bullet}
                     </li>
                   ))}
@@ -997,7 +1008,11 @@ export default function ThemeDetailPage() {
             <div style={{ fontSize: '56px', fontWeight: 800, color: C.dark, lineHeight: '1' }}>
               {theme.rating}
             </div>
-            <div style={{ fontSize: '20px', color: C.amber, margin: '6px 0 4px' }}>★★★★★</div>
+            <div style={{ display: 'flex', gap: '2px', justifyContent: 'center', margin: '6px 0 4px' }}>
+              {[0,1,2,3,4].map((i) => (
+                <svg key={i} width="16" height="16" viewBox="0 0 24 24" fill="#f59e0b" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              ))}
+            </div>
             <div style={{ fontSize: '13px', color: C.muted }}>out of 5</div>
           </div>
 
@@ -1006,9 +1021,9 @@ export default function ThemeDetailPage() {
               95% of merchants recommend this theme
             </div>
             {[
-              { label: '👍 Positive', pct: 95, color: '#22c55e' },
-              { label: '😐 Neutral', pct: 3, color: '#94a3b8' },
-              { label: '👎 Critical', pct: 2, color: '#f87171' },
+              { label: 'Positive', pct: 95, color: '#22c55e' },
+              { label: 'Neutral', pct: 3, color: '#94a3b8' },
+              { label: 'Critical', pct: 2, color: '#f87171' },
             ].map((row) => (
               <div
                 key={row.label}
@@ -1019,7 +1034,8 @@ export default function ThemeDetailPage() {
                   marginBottom: '8px',
                 }}
               >
-                <span style={{ fontSize: '12px', color: C.muted, width: '90px', flexShrink: 0 }}>
+                <span style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '12px', color: C.muted, width: '90px', flexShrink: 0 }}>
+                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: row.color, flexShrink: 0, display: 'inline-block' }}/>
                   {row.label}
                 </span>
                 <div
@@ -1085,8 +1101,6 @@ export default function ThemeDetailPage() {
                 </div>
                 <span
                   style={{
-                    fontSize: '20px',
-                    color: '#22c55e',
                     background: '#f0fdf4',
                     borderRadius: '50%',
                     width: '32px',
@@ -1094,9 +1108,10 @@ export default function ThemeDetailPage() {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
+                    flexShrink: 0,
                   }}
                 >
-                  👍
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="#16a34a" stroke="none"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
                 </span>
               </div>
               <p
@@ -1130,7 +1145,8 @@ export default function ThemeDetailPage() {
               cursor: 'pointer',
             }}
           >
-            ✏️ Write a review
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1a1a2e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            Write a review
           </button>
         </div>
       </div>

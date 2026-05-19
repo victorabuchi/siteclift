@@ -90,9 +90,9 @@ function CheckboxItem({
         }}
       >
         {checked && (
-          <span style={{ color: '#ffffff', fontSize: '9px', fontWeight: 700, lineHeight: '1' }}>
-            ✓
-          </span>
+          <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
         )}
       </div>
       <span style={{ fontSize: '13px', color: '#374151', flex: 1 }}>{label}</span>
@@ -129,17 +129,24 @@ function SidebarSection({
         }}
       >
         <span style={{ fontSize: '14px', fontWeight: 600, color: '#1a1a2e' }}>{title}</span>
-        <span
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#6b7280"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           style={{
-            fontSize: '11px',
-            color: '#6b7280',
             display: 'inline-block',
             transform: open ? 'rotate(0deg)' : 'rotate(-90deg)',
             transition: 'transform 0.18s ease',
+            flexShrink: 0,
           }}
         >
-          ▼
-        </span>
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
       </button>
       {open && <div style={{ paddingBottom: '12px' }}>{children}</div>}
     </div>

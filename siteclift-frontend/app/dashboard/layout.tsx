@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth';
@@ -39,6 +39,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const { logout } = useAuth();
   const [ready, setReady] = useState(false);
   const [user, setUser] = useState<NavUser | null>(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const token = localStorage.getItem('siteclift_token');
@@ -56,6 +58,18 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     }
     setReady(true);
   }, [router]);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false);
+      }
+    }
+    if (dropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [dropdownOpen]);
 
   function handleSignOut() {
     logout();
@@ -106,58 +120,105 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         </nav>
 
         <div
-          style={{
-            marginLeft: 'auto',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px',
-            flexShrink: 0,
-          }}
+          ref={dropdownRef}
+          style={{ marginLeft: 'auto', position: 'relative', flexShrink: 0 }}
         >
-          <div
+          <button
+            onClick={() => setDropdownOpen((v) => !v)}
             style={{
-              width: '34px',
-              height: '34px',
-              borderRadius: '50%',
-              background: '#f59e0b',
-              color: '#ffffff',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '12px',
-              fontWeight: 700,
-              flexShrink: 0,
-            }}
-          >
-            {user ? getInitials(user.name) : '?'}
-          </div>
-
-          {user && (
-            <span
-              style={{
-                fontSize: '14px',
-                fontWeight: 500,
-                color: '#1a1a2e',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              {user?.name}
-            </span>
-          )}
-
-          <button
-            onClick={handleSignOut}
-            style={{
+              gap: '7px',
               background: 'none',
               border: 'none',
               cursor: 'pointer',
-              fontSize: '13px',
-              color: '#64748b',
               padding: '4px 0',
             }}
           >
-            Sign out
+            <div
+              style={{
+                width: '22px',
+                height: '22px',
+                borderRadius: '50%',
+                background: '#f59e0b',
+                color: '#ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '10px',
+                fontWeight: 700,
+                flexShrink: 0,
+              }}
+            >
+              {user ? getInitials(user.name) : '?'}
+            </div>
+            {user && (
+              <span style={{ fontSize: '14px', fontWeight: 500, color: '#1a1a2e', whiteSpace: 'nowrap' }}>
+                {user.name}
+              </span>
+            )}
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#64748b"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ flexShrink: 0 }}
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
           </button>
+
+          {dropdownOpen && (
+            <div
+              style={{
+                position: 'absolute',
+                right: 0,
+                top: 'calc(100% + 8px)',
+                background: '#ffffff',
+                border: '1px solid #e2e8f0',
+                borderRadius: '8px',
+                boxShadow: '0 4px 16px rgba(0,0,0,0.1)',
+                minWidth: '180px',
+                zIndex: 200,
+                overflow: 'hidden',
+              }}
+            >
+              <Link
+                href="/dashboard/account"
+                onClick={() => setDropdownOpen(false)}
+                style={{
+                  display: 'block',
+                  padding: '10px 16px',
+                  fontSize: '14px',
+                  color: '#374151',
+                  textDecoration: 'none',
+                }}
+              >
+                Account settings
+              </Link>
+              <button
+                onClick={() => { handleSignOut(); setDropdownOpen(false); }}
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  padding: '10px 16px',
+                  fontSize: '14px',
+                  color: '#374151',
+                  background: 'none',
+                  border: 'none',
+                  borderTop: '1px solid #e2e8f0',
+                  cursor: 'pointer',
+                  textAlign: 'left',
+                }}
+              >
+                Sign out
+              </button>
+            </div>
+          )}
         </div>
       </header>
 

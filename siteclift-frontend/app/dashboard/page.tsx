@@ -40,6 +40,191 @@ function formatDate(dateStr?: string): string {
   return `${Math.floor(diffDays / 365)} years ago`;
 }
 
+function PageHeaderBar() {
+  return (
+    <div
+      style={{
+        background: '#ffffff',
+        borderBottom: '1px solid #e2e8f0',
+        padding: '12px 32px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#1a1a2e"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+          <polyline points="9 22 9 12 15 12 15 22" />
+        </svg>
+        <span style={{ fontSize: '16px', fontWeight: 600, color: '#1a1a2e' }}>Online Store</span>
+      </div>
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <button
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '5px',
+            padding: '6px 12px',
+            border: '1px solid #e2e8f0',
+            borderRadius: '6px',
+            background: '#ffffff',
+            fontSize: '13px',
+            color: '#374151',
+            cursor: 'pointer',
+          }}
+        >
+          <svg
+            width="13"
+            height="13"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#374151"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+            <circle cx="12" cy="12" r="3" />
+          </svg>
+          Public
+          <svg
+            width="11"
+            height="11"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#9ca3af"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+
+        <button
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '5px',
+            padding: '6px 12px',
+            border: '1px solid #e2e8f0',
+            borderRadius: '6px',
+            background: '#ffffff',
+            fontSize: '13px',
+            color: '#374151',
+            cursor: 'pointer',
+          }}
+        >
+          View store
+        </button>
+
+        <button
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '6px 10px',
+            border: '1px solid #e2e8f0',
+            borderRadius: '6px',
+            background: '#ffffff',
+            cursor: 'pointer',
+          }}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#374151" stroke="none">
+            <circle cx="5" cy="12" r="1.5" />
+            <circle cx="12" cy="12" r="1.5" />
+            <circle cx="19" cy="12" r="1.5" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function SearchBar() {
+  const [value, setValue] = useState('');
+
+  return (
+    <div style={{ position: 'relative', marginBottom: '24px' }}>
+      <div
+        style={{
+          position: 'absolute',
+          left: '14px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          pointerEvents: 'none',
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#9ca3af"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <circle cx="11" cy="11" r="8" />
+          <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        </svg>
+      </div>
+      <input
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder="Search themes, settings, help..."
+        style={{
+          width: '100%',
+          padding: '12px 80px 12px 40px',
+          border: '1px solid #e2e8f0',
+          borderRadius: '8px',
+          fontSize: '14px',
+          color: '#1a1a2e',
+          background: '#ffffff',
+          outline: 'none',
+          boxSizing: 'border-box',
+        }}
+      />
+      <div
+        style={{
+          position: 'absolute',
+          right: '12px',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          pointerEvents: 'none',
+        }}
+      >
+        <span
+          style={{
+            fontSize: '12px',
+            color: '#64748b',
+            background: '#f1f5f9',
+            borderRadius: '4px',
+            padding: '2px 6px',
+            fontFamily: 'monospace',
+            letterSpacing: '0.02em',
+          }}
+        >
+          Ctrl K
+        </span>
+      </div>
+    </div>
+  );
+}
+
 function AnalyticsBar() {
   const cols = [
     { label: 'Page views', value: '0' },
@@ -115,12 +300,7 @@ function CurrentThemeSection({ website }: { website: Website | null }) {
           marginBottom: '24px',
         }}
       >
-        <div
-          style={{
-            padding: '14px 20px',
-            borderBottom: '1px solid #e2e8f0',
-          }}
-        >
+        <div style={{ padding: '14px 20px', borderBottom: '1px solid #e2e8f0' }}>
           <span style={{ fontSize: '14px', fontWeight: 700, color: '#1a1a2e' }}>Current theme</span>
         </div>
         <div
@@ -293,13 +473,7 @@ function CurrentThemeSection({ website }: { website: Website | null }) {
             flexShrink: 0,
           }}
         >
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="#1a1a2e"
-            stroke="none"
-          >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#1a1a2e" stroke="none">
             <circle cx="12" cy="5" r="1.5" />
             <circle cx="12" cy="12" r="1.5" />
             <circle cx="12" cy="19" r="1.5" />
@@ -445,7 +619,7 @@ function DiscoverThemesSection() {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridTemplateColumns: 'repeat(4, 1fr)',
           gap: '16px',
         }}
       >
@@ -463,19 +637,24 @@ function DiscoverThemesSection() {
             >
               <Link
                 href={`/marketplace/${theme.slug}`}
-                style={{ display: 'block', position: 'relative', height: '200px', textDecoration: 'none' }}
+                style={{
+                  display: 'block',
+                  position: 'relative',
+                  height: '160px',
+                  textDecoration: 'none',
+                }}
               >
                 <Image
                   src={imgSrc}
                   alt={theme.name}
                   fill
                   style={{ objectFit: 'cover' }}
-                  sizes="(max-width: 1100px) 33vw, 340px"
+                  sizes="(max-width: 1100px) 25vw, 260px"
                 />
               </Link>
               <div
                 style={{
-                  padding: '12px 16px',
+                  padding: '12px 14px',
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
@@ -511,7 +690,7 @@ function DiscoverThemesSection() {
                     display: 'inline-block',
                     border: '1px solid #d1d5db',
                     borderRadius: '6px',
-                    padding: '6px 16px',
+                    padding: '5px 14px',
                     fontSize: '13px',
                     color: '#374151',
                     background: '#ffffff',
@@ -525,6 +704,74 @@ function DiscoverThemesSection() {
             </div>
           );
         })}
+
+        {/* Explore more card */}
+        <div
+          style={{
+            background: '#ffffff',
+            border: '1px solid #e2e8f0',
+            borderRadius: '8px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '32px 24px',
+            textAlign: 'center',
+          }}
+        >
+          <div
+            style={{
+              fontSize: '15px',
+              fontWeight: 600,
+              color: '#1a1a2e',
+              marginBottom: '8px',
+            }}
+          >
+            Explore more themes
+          </div>
+          <div
+            style={{
+              fontSize: '13px',
+              color: '#64748b',
+              marginBottom: '16px',
+              lineHeight: '1.5',
+            }}
+          >
+            Browse professionally designed free and paid themes
+          </div>
+          <Link
+            href="/marketplace"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              border: '1px solid #e2e8f0',
+              borderRadius: '6px',
+              padding: '8px 16px',
+              fontSize: '13px',
+              color: '#374151',
+              background: '#ffffff',
+              textDecoration: 'none',
+              fontWeight: 500,
+            }}
+          >
+            <svg
+              width="13"
+              height="13"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#374151"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+              <polyline points="15 3 21 3 21 9" />
+              <line x1="10" y1="14" x2="21" y2="3" />
+            </svg>
+            Visit Marketplace
+          </Link>
+        </div>
       </div>
     </div>
   );
@@ -548,12 +795,33 @@ export default function DashboardPage() {
   const currentSite = websites.length > 0 ? websites[0] : null;
 
   return (
-    <div style={{ background: '#f4f4f4', minHeight: 'calc(100vh - 60px)', padding: '32px' }}>
-      <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-        <AnalyticsBar />
-        <CurrentThemeSection website={loading ? null : currentSite} />
-        <DraftThemesSection />
-        <DiscoverThemesSection />
+    <div style={{ background: '#f4f4f4', minHeight: 'calc(100vh - 60px)' }}>
+      <PageHeaderBar />
+      <div style={{ padding: '32px' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+          <SearchBar />
+          <AnalyticsBar />
+          <CurrentThemeSection website={loading ? null : currentSite} />
+          <DraftThemesSection />
+          <DiscoverThemesSection />
+          <div
+            style={{
+              textAlign: 'center',
+              marginTop: '32px',
+              paddingBottom: '32px',
+              fontSize: '13px',
+              color: '#64748b',
+            }}
+          >
+            Learn more about{' '}
+            <Link
+              href="/marketplace"
+              style={{ color: '#f59e0b', textDecoration: 'none', fontWeight: 500 }}
+            >
+              themes
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );

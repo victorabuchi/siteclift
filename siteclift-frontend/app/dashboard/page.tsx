@@ -40,118 +40,6 @@ function formatDate(dateStr?: string): string {
   return `${Math.floor(diffDays / 365)} years ago`;
 }
 
-function PageHeaderBar() {
-  return (
-    <div
-      style={{
-        background: '#ffffff',
-        borderBottom: '1px solid #e2e8f0',
-        padding: '12px 32px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-      }}
-    >
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#1a1a2e"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-          <polyline points="9 22 9 12 15 12 15 22" />
-        </svg>
-        <span style={{ fontSize: '16px', fontWeight: 600, color: '#1a1a2e' }}>Online Store</span>
-      </div>
-
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-        <button
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '5px',
-            padding: '6px 12px',
-            border: '1px solid #e2e8f0',
-            borderRadius: '6px',
-            background: '#ffffff',
-            fontSize: '13px',
-            color: '#374151',
-            cursor: 'pointer',
-          }}
-        >
-          <svg
-            width="13"
-            height="13"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#374151"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-            <circle cx="12" cy="12" r="3" />
-          </svg>
-          Public
-          <svg
-            width="11"
-            height="11"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#9ca3af"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
-        </button>
-
-        <button
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '5px',
-            padding: '6px 12px',
-            border: '1px solid #e2e8f0',
-            borderRadius: '6px',
-            background: '#ffffff',
-            fontSize: '13px',
-            color: '#374151',
-            cursor: 'pointer',
-          }}
-        >
-          View store
-        </button>
-
-        <button
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '6px 10px',
-            border: '1px solid #e2e8f0',
-            borderRadius: '6px',
-            background: '#ffffff',
-            cursor: 'pointer',
-          }}
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="#374151" stroke="none">
-            <circle cx="5" cy="12" r="1.5" />
-            <circle cx="12" cy="12" r="1.5" />
-            <circle cx="19" cy="12" r="1.5" />
-          </svg>
-        </button>
-      </div>
-    </div>
-  );
-}
-
 function SearchBar() {
   const [value, setValue] = useState('');
 
@@ -795,8 +683,7 @@ export default function DashboardPage() {
   const currentSite = websites.length > 0 ? websites[0] : null;
 
   return (
-    <div style={{ background: '#f4f4f4', minHeight: 'calc(100vh - 60px)' }}>
-      <PageHeaderBar />
+    <div style={{ background: '#f4f4f4', minHeight: 'calc(100vh - 56px)' }}>
       <div style={{ padding: '32px' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
           <SearchBar />

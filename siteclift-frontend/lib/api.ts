@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:6002',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://siteclift-backend.onrender.com',
 });
 
 api.interceptors.request.use((config) => {

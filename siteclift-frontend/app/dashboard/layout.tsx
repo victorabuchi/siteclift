@@ -82,7 +82,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   if (!ready) return null;
 
   return (
-    <div style={{ minHeight: '100vh', background: '#0f0f11' }}>
+    <div style={{ minHeight: '100vh', background: '#f4f4f4' }}>
       {/* Top bar */}
       <header
         style={{
@@ -91,16 +91,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           left: 0,
           right: 0,
           height: '52px',
-          background: '#18181b',
-          borderBottom: '1px solid #2a2a2f',
+          background: '#1a1a2e',
           zIndex: 200,
           display: 'flex',
           alignItems: 'center',
           padding: '0 16px',
-          gap: '12px',
         }}
       >
-        {/* Logo */}
+        {/* Left: logo */}
         <Link
           href="/dashboard"
           style={{
@@ -132,73 +130,75 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </span>
         </Link>
 
-        {/* Search */}
-        <div style={{ flex: 1, maxWidth: '520px', position: 'relative' }}>
-          <div
-            style={{
-              position: 'absolute',
-              left: '11px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              pointerEvents: 'none',
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#52525b"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-          </div>
-          <input
-            placeholder="Search"
-            style={{
-              width: '100%',
-              padding: '7px 60px 7px 32px',
-              background: '#0f0f11',
-              border: '1px solid #2a2a2f',
-              borderRadius: '6px',
-              fontSize: '13px',
-              color: '#fafafa',
-              outline: 'none',
-              boxSizing: 'border-box',
-            }}
-          />
-          <div
-            style={{
-              position: 'absolute',
-              right: '10px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              pointerEvents: 'none',
-            }}
-          >
-            <span
+        {/* Center: search */}
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center', padding: '0 24px' }}>
+          <div style={{ width: '100%', maxWidth: '480px', position: 'relative' }}>
+            <div
               style={{
-                fontSize: '11px',
-                color: '#52525b',
-                background: '#27272a',
-                borderRadius: '3px',
-                padding: '2px 5px',
-                fontFamily: 'monospace',
+                position: 'absolute',
+                left: '11px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                pointerEvents: 'none',
+                display: 'flex',
+                alignItems: 'center',
               }}
             >
-              Ctrl K
-            </span>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="rgba(255,255,255,0.5)"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+            </div>
+            <input
+              placeholder="Search"
+              style={{
+                width: '100%',
+                padding: '7px 60px 7px 32px',
+                background: 'rgba(255,255,255,0.1)',
+                border: '1px solid rgba(255,255,255,0.15)',
+                borderRadius: '6px',
+                fontSize: '13px',
+                color: '#ffffff',
+                outline: 'none',
+                boxSizing: 'border-box',
+              }}
+            />
+            <div
+              style={{
+                position: 'absolute',
+                right: '10px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                pointerEvents: 'none',
+              }}
+            >
+              <span
+                style={{
+                  fontSize: '11px',
+                  color: 'rgba(255,255,255,0.4)',
+                  background: 'rgba(255,255,255,0.1)',
+                  borderRadius: '3px',
+                  padding: '2px 5px',
+                  fontFamily: 'monospace',
+                }}
+              >
+                Ctrl K
+              </span>
+            </div>
           </div>
         </div>
 
-        {/* Right icons */}
-        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: '2px' }}>
+        {/* Right: icons + avatar */}
+        <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center', gap: '2px' }}>
           {/* Apps grid */}
           <button
             style={{
@@ -218,7 +218,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               height="15"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="#71717a"
+              stroke="rgba(255,255,255,0.55)"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -249,7 +249,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               height="15"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="#71717a"
+              stroke="rgba(255,255,255,0.55)"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -267,7 +267,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 width: '28px',
                 height: '28px',
                 borderRadius: '50%',
-                background: '#6366f1',
+                background: '#f59e0b',
                 border: 'none',
                 cursor: 'pointer',
                 display: 'flex',
@@ -287,10 +287,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   position: 'absolute',
                   right: 0,
                   top: 'calc(100% + 8px)',
-                  background: '#18181b',
-                  border: '1px solid #2a2a2f',
+                  background: '#ffffff',
+                  border: '1px solid #e2e8f0',
                   borderRadius: '8px',
-                  boxShadow: '0 8px 24px rgba(0,0,0,0.4)',
+                  boxShadow: '0 4px 16px rgba(0,0,0,0.12)',
                   minWidth: '200px',
                   zIndex: 300,
                   overflow: 'hidden',
@@ -300,14 +300,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   <div
                     style={{
                       padding: '12px 16px',
-                      borderBottom: '1px solid #2a2a2f',
-                      background: '#1c1c1f',
+                      borderBottom: '1px solid #e2e8f0',
+                      background: '#f8fafc',
                     }}
                   >
-                    <div style={{ fontSize: '13px', fontWeight: 600, color: '#fafafa' }}>
+                    <div style={{ fontSize: '13px', fontWeight: 600, color: '#1a1a2e' }}>
                       {user.name}
                     </div>
-                    <div style={{ fontSize: '12px', color: '#71717a', marginTop: '2px' }}>
+                    <div style={{ fontSize: '12px', color: '#64748b', marginTop: '2px' }}>
                       {user.email}
                     </div>
                   </div>
@@ -319,7 +319,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     display: 'block',
                     padding: '10px 16px',
                     fontSize: '13px',
-                    color: '#a1a1aa',
+                    color: '#374151',
                     textDecoration: 'none',
                   }}
                 >
@@ -332,10 +332,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     width: '100%',
                     padding: '10px 16px',
                     fontSize: '13px',
-                    color: '#a1a1aa',
+                    color: '#374151',
                     background: 'none',
                     border: 'none',
-                    borderTop: '1px solid #2a2a2f',
+                    borderTop: '1px solid #e2e8f0',
                     cursor: 'pointer',
                     textAlign: 'left',
                   }}
@@ -356,21 +356,21 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           top: '52px',
           width: '220px',
           height: 'calc(100vh - 52px)',
-          background: '#18181b',
-          borderRight: '1px solid #2a2a2f',
+          background: '#ffffff',
+          borderRight: '1px solid #e2e8f0',
           overflowY: 'auto',
           paddingTop: '16px',
           zIndex: 100,
         }}
       >
-        {/* Sales Channels */}
+        {/* Sales Channels label */}
         <div
           style={{
             padding: '0 16px',
             marginBottom: '4px',
             fontSize: '11px',
             fontWeight: 500,
-            color: '#52525b',
+            color: '#9ca3af',
             letterSpacing: '1px',
             textTransform: 'uppercase',
           }}
@@ -389,12 +389,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   alignItems: 'center',
                   gap: '8px',
                   padding: '8px 10px',
+                  paddingLeft: active ? '7px' : '10px',
                   fontSize: '14px',
                   fontWeight: active ? 600 : 400,
-                  color: active ? '#ffffff' : '#71717a',
+                  color: active ? '#1a1a2e' : '#374151',
                   textDecoration: 'none',
                   borderRadius: '6px',
-                  background: active ? '#6366f1' : 'transparent',
+                  background: active ? '#f3f4f6' : 'transparent',
+                  borderLeft: active ? '3px solid #1a1a2e' : '3px solid transparent',
                 }}
               >
                 <svg
@@ -402,7 +404,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   height="14"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke={active ? '#ffffff' : '#71717a'}
+                  stroke={active ? '#1a1a2e' : '#9ca3af'}
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -417,16 +419,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         })}
 
         {/* Divider */}
-        <div style={{ margin: '12px 0', borderTop: '1px solid #2a2a2f' }} />
+        <div style={{ margin: '12px 0', borderTop: '1px solid #e2e8f0' }} />
 
-        {/* Settings */}
+        {/* Settings label */}
         <div
           style={{
             padding: '0 16px',
             marginBottom: '4px',
             fontSize: '11px',
             fontWeight: 500,
-            color: '#52525b',
+            color: '#9ca3af',
             letterSpacing: '1px',
             textTransform: 'uppercase',
           }}
@@ -444,12 +446,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   display: 'flex',
                   alignItems: 'center',
                   padding: '8px 10px',
+                  paddingLeft: active ? '7px' : '10px',
                   fontSize: '14px',
                   fontWeight: active ? 600 : 400,
-                  color: active ? '#ffffff' : '#71717a',
+                  color: active ? '#1a1a2e' : '#374151',
                   textDecoration: 'none',
                   borderRadius: '6px',
-                  background: active ? '#6366f1' : 'transparent',
+                  background: active ? '#f3f4f6' : 'transparent',
+                  borderLeft: active ? '3px solid #1a1a2e' : '3px solid transparent',
                 }}
               >
                 {label}
@@ -465,7 +469,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           marginLeft: '220px',
           marginTop: '52px',
           minHeight: 'calc(100vh - 52px)',
-          background: '#0f0f11',
+          background: '#f4f4f4',
         }}
       >
         {children}

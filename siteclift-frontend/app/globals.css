@@ -1,13 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --color-primary: #6366f1;
-  --color-primary-dark: #4f46e5;
-  --color-text: #fafafa;
-  --color-muted: #71717a;
-  --color-border: #2a2a2f;
-  --color-surface: #1c1c1f;
-  --color-bg: #0f0f11;
+  --color-primary: #1a1a1a;
+  --color-primary-dark: #000000;
+  --color-text: #1a1a2e;
+  --color-muted: #64748b;
+  --color-border: #e2e8f0;
+  --color-surface: #f8fafc;
 }
 
 @theme inline {
@@ -16,22 +15,22 @@
 }
 
 body {
-  background: #0f0f11;
-  color: #fafafa;
+  background: #ffffff;
+  color: #1a1a2e;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 .auth-submit-btn {
-  background: #6366f1;
+  background: #1a1a1a;
   transition: background 0.15s;
 }
 
 .auth-submit-btn:hover:not(:disabled) {
-  background: #4f46e5;
+  background: #000000;
 }
 
 .auth-submit-btn:disabled {
-  background: #4338ca;
+  background: #52525b;
   opacity: 0.6;
   cursor: not-allowed;
 }
@@ -43,7 +42,7 @@ body {
   height: 52px;
   font-size: 14px;
   font-weight: 500;
-  color: #71717a;
+  color: #64748b;
   text-decoration: none;
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
@@ -51,12 +50,12 @@ body {
 }
 
 .topnav-link:hover {
-  color: #fafafa;
+  color: #1a1a2e;
 }
 
 .topnav-link.active {
-  color: #6366f1;
-  border-bottom-color: #6366f1;
+  color: #1a1a2e;
+  border-bottom-color: #1a1a2e;
 }
 
 .mkt-btn-primary {
@@ -64,7 +63,7 @@ body {
 }
 
 .mkt-btn-primary:hover {
-  background: #4f46e5 !important;
+  background: #000000 !important;
 }
 
 .mkt-btn-outline {
@@ -72,6 +71,6 @@ body {
 }
 
 .mkt-btn-outline:hover {
-  background: #27272a !important;
-  border-color: #3f3f46 !important;
+  background: #f8fafc !important;
+  border-color: #cbd5e1 !important;
 }

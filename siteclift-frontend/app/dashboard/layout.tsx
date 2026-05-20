@@ -98,34 +98,15 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           padding: '0 16px',
         }}
       >
-        {/* Left: logo */}
+        {/* Left: wordmark */}
         <Link
           href="/dashboard"
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
             textDecoration: 'none',
             flexShrink: 0,
           }}
         >
-          <div
-            style={{
-              width: '28px',
-              height: '28px',
-              borderRadius: '6px',
-              background: 'linear-gradient(135deg, #6366f1, #8b5cf6)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: 0,
-            }}
-          >
-            <span style={{ fontSize: '14px', fontWeight: 800, color: '#ffffff', lineHeight: 1 }}>
-              S
-            </span>
-          </div>
-          <span style={{ fontSize: '15px', fontWeight: 600, color: '#ffffff', whiteSpace: 'nowrap' }}>
+          <span style={{ fontSize: '16px', fontWeight: 600, color: '#ffffff', whiteSpace: 'nowrap' }}>
             Siteclift
           </span>
         </Link>
@@ -218,7 +199,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               height="15"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="rgba(255,255,255,0.55)"
+              stroke="#9ca3af"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -249,7 +230,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               height="15"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="rgba(255,255,255,0.55)"
+              stroke="#9ca3af"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -267,7 +248,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 width: '28px',
                 height: '28px',
                 borderRadius: '50%',
-                background: '#f59e0b',
+                background: '#4b5563',
                 border: 'none',
                 cursor: 'pointer',
                 display: 'flex',
@@ -356,22 +337,20 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           top: '52px',
           width: '220px',
           height: 'calc(100vh - 52px)',
-          background: '#ffffff',
-          borderRight: '1px solid #e2e8f0',
+          background: '#f4f4f4',
           overflowY: 'auto',
-          paddingTop: '16px',
+          paddingTop: '8px',
           zIndex: 100,
         }}
       >
         {/* Sales Channels label */}
         <div
           style={{
-            padding: '0 16px',
-            marginBottom: '4px',
+            padding: '8px 12px',
             fontSize: '11px',
-            fontWeight: 500,
-            color: '#9ca3af',
-            letterSpacing: '1px',
+            fontWeight: 600,
+            color: '#6b7280',
+            letterSpacing: '0.05em',
             textTransform: 'uppercase',
           }}
         >
@@ -381,7 +360,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {SIDEBAR_SALES.map(({ href, label }) => {
           const active = isActive(href, pathname);
           return (
-            <div key={href} style={{ margin: '0 8px' }}>
+            <div key={href} style={{ margin: '2px 8px' }}>
               <Link
                 href={href}
                 style={{
@@ -389,14 +368,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   alignItems: 'center',
                   gap: '8px',
                   padding: '8px 10px',
-                  paddingLeft: active ? '7px' : '10px',
                   fontSize: '14px',
-                  fontWeight: active ? 600 : 400,
-                  color: active ? '#1a1a2e' : '#374151',
+                  fontWeight: 500,
+                  color: '#1a1a2e',
                   textDecoration: 'none',
-                  borderRadius: '6px',
-                  background: active ? '#f3f4f6' : 'transparent',
-                  borderLeft: active ? '3px solid #1a1a2e' : '3px solid transparent',
+                  borderRadius: '8px',
+                  background: active ? '#ffffff' : 'transparent',
+                  boxShadow: active ? '0 1px 2px rgba(0,0,0,0.08)' : 'none',
                 }}
               >
                 <svg
@@ -404,7 +382,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   height="14"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke={active ? '#1a1a2e' : '#9ca3af'}
+                  stroke="#1a1a2e"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -419,17 +397,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         })}
 
         {/* Divider */}
-        <div style={{ margin: '12px 0', borderTop: '1px solid #e2e8f0' }} />
+        <div style={{ margin: '8px 0' }} />
 
         {/* Settings label */}
         <div
           style={{
-            padding: '0 16px',
-            marginBottom: '4px',
+            padding: '8px 12px',
             fontSize: '11px',
-            fontWeight: 500,
-            color: '#9ca3af',
-            letterSpacing: '1px',
+            fontWeight: 600,
+            color: '#6b7280',
+            letterSpacing: '0.05em',
             textTransform: 'uppercase',
           }}
         >
@@ -439,21 +416,20 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         {SIDEBAR_SETTINGS.map(({ href, label }) => {
           const active = isActive(href, pathname);
           return (
-            <div key={href} style={{ margin: '0 8px' }}>
+            <div key={href} style={{ margin: '2px 8px' }}>
               <Link
                 href={href}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
                   padding: '8px 10px',
-                  paddingLeft: active ? '7px' : '10px',
                   fontSize: '14px',
-                  fontWeight: active ? 600 : 400,
-                  color: active ? '#1a1a2e' : '#374151',
+                  fontWeight: 400,
+                  color: '#374151',
                   textDecoration: 'none',
-                  borderRadius: '6px',
-                  background: active ? '#f3f4f6' : 'transparent',
-                  borderLeft: active ? '3px solid #1a1a2e' : '3px solid transparent',
+                  borderRadius: '8px',
+                  background: active ? '#ffffff' : 'transparent',
+                  boxShadow: active ? '0 1px 2px rgba(0,0,0,0.08)' : 'none',
                 }}
               >
                 {label}

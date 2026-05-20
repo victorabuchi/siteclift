@@ -40,81 +40,8 @@ function formatDate(dateStr?: string): string {
   return `${Math.floor(diffDays / 365)} years ago`;
 }
 
-function SearchBar() {
-  const [value, setValue] = useState('');
-
-  return (
-    <div style={{ position: 'relative', marginBottom: '24px' }}>
-      <div
-        style={{
-          position: 'absolute',
-          left: '14px',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          pointerEvents: 'none',
-          display: 'flex',
-          alignItems: 'center',
-        }}
-      >
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#9ca3af"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="11" cy="11" r="8" />
-          <line x1="21" y1="21" x2="16.65" y2="16.65" />
-        </svg>
-      </div>
-      <input
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        placeholder="Search themes, settings, help..."
-        style={{
-          width: '100%',
-          padding: '12px 80px 12px 40px',
-          border: '1px solid #e2e8f0',
-          borderRadius: '8px',
-          fontSize: '14px',
-          color: '#1a1a2e',
-          background: '#ffffff',
-          outline: 'none',
-          boxSizing: 'border-box',
-        }}
-      />
-      <div
-        style={{
-          position: 'absolute',
-          right: '12px',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          pointerEvents: 'none',
-        }}
-      >
-        <span
-          style={{
-            fontSize: '12px',
-            color: '#64748b',
-            background: '#f1f5f9',
-            borderRadius: '4px',
-            padding: '2px 6px',
-            fontFamily: 'monospace',
-            letterSpacing: '0.02em',
-          }}
-        >
-          Ctrl K
-        </span>
-      </div>
-    </div>
-  );
-}
-
 function AnalyticsBar() {
-  const cols = [
+  const stats = [
     { label: 'Page views', value: '0' },
     { label: 'Unique visitors', value: '0' },
     { label: 'Sessions', value: '0' },
@@ -124,11 +51,13 @@ function AnalyticsBar() {
   return (
     <div
       style={{
-        background: '#ffffff',
-        borderRadius: '8px',
+        background: '#1c1c1f',
+        border: '1px solid #2a2a2f',
+        borderRadius: '10px',
         padding: '20px 24px',
         marginBottom: '24px',
-        display: 'flex',
+        display: 'grid',
+        gridTemplateColumns: 'auto 1fr 1fr 1fr 1fr',
         alignItems: 'center',
       }}
     >
@@ -142,11 +71,11 @@ function AnalyticsBar() {
         }}
       >
         <svg
-          width="15"
-          height="15"
+          width="14"
+          height="14"
           viewBox="0 0 24 24"
           fill="none"
-          stroke="#64748b"
+          stroke="#71717a"
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -156,21 +85,20 @@ function AnalyticsBar() {
           <line x1="8" y1="2" x2="8" y2="6" />
           <line x1="3" y1="10" x2="21" y2="10" />
         </svg>
-        <span style={{ fontSize: '13px', fontWeight: 600, color: '#64748b' }}>30 days</span>
+        <span style={{ fontSize: '13px', fontWeight: 600, color: '#71717a' }}>30 days</span>
       </div>
 
-      {cols.map((col) => (
+      {stats.map((stat) => (
         <div
-          key={col.label}
+          key={stat.label}
           style={{
-            flex: 1,
-            borderLeft: '1px solid #e2e8f0',
+            borderLeft: '1px solid #2a2a2f',
             paddingLeft: '24px',
             paddingRight: '24px',
           }}
         >
-          <div style={{ fontSize: '13px', color: '#64748b', marginBottom: '4px' }}>{col.label}</div>
-          <div style={{ fontSize: '22px', fontWeight: 700, color: '#1a1a2e' }}>{col.value}</div>
+          <div style={{ fontSize: '12px', color: '#71717a', marginBottom: '4px' }}>{stat.label}</div>
+          <div style={{ fontSize: '24px', fontWeight: 700, color: '#fafafa' }}>{stat.value}</div>
         </div>
       ))}
     </div>
@@ -182,18 +110,19 @@ function CurrentThemeSection({ website }: { website: Website | null }) {
     return (
       <div
         style={{
-          background: '#ffffff',
-          borderRadius: '8px',
+          background: '#1c1c1f',
+          border: '1px solid #2a2a2f',
+          borderRadius: '10px',
           overflow: 'hidden',
           marginBottom: '24px',
         }}
       >
-        <div style={{ padding: '14px 20px', borderBottom: '1px solid #e2e8f0' }}>
-          <span style={{ fontSize: '14px', fontWeight: 700, color: '#1a1a2e' }}>Current theme</span>
+        <div style={{ padding: '16px 20px', borderBottom: '1px solid #2a2a2f' }}>
+          <span style={{ fontSize: '14px', fontWeight: 600, color: '#fafafa' }}>Current theme</span>
         </div>
         <div
           style={{
-            padding: '48px 32px',
+            padding: '52px 32px',
             textAlign: 'center',
             display: 'flex',
             flexDirection: 'column',
@@ -205,7 +134,7 @@ function CurrentThemeSection({ website }: { website: Website | null }) {
             height="88"
             viewBox="0 0 120 88"
             fill="none"
-            stroke="#d1d5db"
+            stroke="#3f3f46"
             strokeWidth="1.5"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -219,16 +148,16 @@ function CurrentThemeSection({ website }: { website: Website | null }) {
             <line x1="22" y1="40" x2="98" y2="40" />
             <line x1="22" y1="54" x2="78" y2="54" />
           </svg>
-          <p style={{ fontSize: '14px', color: '#64748b', margin: '0 0 18px 0', lineHeight: '1.6' }}>
+          <p style={{ fontSize: '14px', color: '#71717a', margin: '0 0 20px 0', lineHeight: '1.6' }}>
             No active theme. Browse the marketplace to get started.
           </p>
           <Link
             href="/marketplace"
             style={{
-              padding: '9px 20px',
-              background: '#f59e0b',
+              padding: '8px 20px',
+              background: '#6366f1',
               color: '#ffffff',
-              borderRadius: '8px',
+              borderRadius: '6px',
               textDecoration: 'none',
               fontSize: '14px',
               fontWeight: 600,
@@ -244,14 +173,15 @@ function CurrentThemeSection({ website }: { website: Website | null }) {
   return (
     <div
       style={{
-        background: '#ffffff',
-        borderRadius: '8px',
+        background: '#1c1c1f',
+        border: '1px solid #2a2a2f',
+        borderRadius: '10px',
         overflow: 'hidden',
         marginBottom: '24px',
       }}
     >
-      <div style={{ padding: '14px 20px', borderBottom: '1px solid #e2e8f0' }}>
-        <span style={{ fontSize: '14px', fontWeight: 700, color: '#1a1a2e' }}>Current theme</span>
+      <div style={{ padding: '16px 20px', borderBottom: '1px solid #2a2a2f' }}>
+        <span style={{ fontSize: '14px', fontWeight: 600, color: '#fafafa' }}>Current theme</span>
       </div>
 
       <div style={{ display: 'flex', height: '280px' }}>
@@ -268,8 +198,8 @@ function CurrentThemeSection({ website }: { website: Website | null }) {
         <div
           style={{
             width: '108px',
-            background: '#f8fafc',
-            borderLeft: '1px solid #e2e8f0',
+            background: '#27272a',
+            borderLeft: '1px solid #2a2a2f',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -279,16 +209,16 @@ function CurrentThemeSection({ website }: { website: Website | null }) {
             style={{
               width: '64px',
               height: '116px',
-              border: '2px solid #1a1a2e',
+              border: '2px solid #3f3f46',
               borderRadius: '10px',
               overflow: 'hidden',
-              background: '#ffffff',
+              background: '#18181b',
             }}
           >
             <div
               style={{
                 height: '10px',
-                background: '#1a1a2e',
+                background: '#2a2a2f',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -298,7 +228,7 @@ function CurrentThemeSection({ website }: { website: Website | null }) {
                 style={{
                   width: '16px',
                   height: '2px',
-                  background: 'rgba(255,255,255,0.35)',
+                  background: 'rgba(255,255,255,0.2)',
                   borderRadius: '1px',
                 }}
               />
@@ -319,7 +249,7 @@ function CurrentThemeSection({ website }: { website: Website | null }) {
       <div
         style={{
           padding: '12px 20px',
-          borderTop: '1px solid #e2e8f0',
+          borderTop: '1px solid #2a2a2f',
           display: 'flex',
           alignItems: 'center',
           gap: '12px',
@@ -327,7 +257,7 @@ function CurrentThemeSection({ website }: { website: Website | null }) {
       >
         <div style={{ flex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontSize: '14px', fontWeight: 700, color: '#1a1a2e' }}>
+            <span style={{ fontSize: '14px', fontWeight: 700, color: '#fafafa' }}>
               {website.theme_name || 'Custom Theme'}
             </span>
             <span
@@ -336,14 +266,14 @@ function CurrentThemeSection({ website }: { website: Website | null }) {
                 borderRadius: '4px',
                 fontSize: '11px',
                 fontWeight: 600,
-                background: '#f1f5f9',
-                color: '#64748b',
+                background: '#27272a',
+                color: '#71717a',
               }}
             >
               Current theme
             </span>
           </div>
-          <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '3px' }}>
+          <div style={{ fontSize: '12px', color: '#52525b', marginTop: '3px' }}>
             Last saved: {formatDate(website.updated_at)}
           </div>
         </div>
@@ -351,9 +281,9 @@ function CurrentThemeSection({ website }: { website: Website | null }) {
           style={{
             width: '36px',
             height: '36px',
-            border: '1px solid #e2e8f0',
+            border: '1px solid #2a2a2f',
             borderRadius: '6px',
-            background: '#ffffff',
+            background: '#27272a',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
@@ -361,7 +291,7 @@ function CurrentThemeSection({ website }: { website: Website | null }) {
             flexShrink: 0,
           }}
         >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="#1a1a2e" stroke="none">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#71717a" stroke="none">
             <circle cx="12" cy="5" r="1.5" />
             <circle cx="12" cy="12" r="1.5" />
             <circle cx="12" cy="19" r="1.5" />
@@ -371,9 +301,9 @@ function CurrentThemeSection({ website }: { website: Website | null }) {
           href={`/dashboard/websites/${website.id}`}
           style={{
             padding: '9px 18px',
-            background: '#1a1a2e',
+            background: '#6366f1',
             color: '#ffffff',
-            borderRadius: '8px',
+            borderRadius: '6px',
             textDecoration: 'none',
             fontSize: '13px',
             fontWeight: 600,
@@ -398,18 +328,18 @@ function DraftThemesSection() {
           marginBottom: '12px',
         }}
       >
-        <h2 style={{ fontSize: '15px', fontWeight: 700, color: '#1a1a2e', margin: 0 }}>
+        <h2 style={{ fontSize: '15px', fontWeight: 700, color: '#fafafa', margin: 0 }}>
           Draft themes
         </h2>
         <button
           style={{
-            padding: '7px 14px',
-            border: '1px solid #e2e8f0',
+            padding: '6px 14px',
+            border: '1px solid #2a2a2f',
             borderRadius: '6px',
-            background: '#ffffff',
+            background: 'transparent',
             fontSize: '13px',
             fontWeight: 600,
-            color: '#1a1a2e',
+            color: '#fafafa',
             cursor: 'pointer',
           }}
         >
@@ -418,13 +348,14 @@ function DraftThemesSection() {
       </div>
       <div
         style={{
-          background: '#ffffff',
-          borderRadius: '8px',
-          padding: '20px',
+          background: '#1c1c1f',
+          border: '1px solid #2a2a2f',
+          borderRadius: '10px',
+          padding: '24px',
           textAlign: 'center',
         }}
       >
-        <span style={{ fontSize: '14px', color: '#64748b' }}>No draft themes</span>
+        <span style={{ fontSize: '14px', color: '#71717a' }}>No draft themes</span>
       </div>
     </div>
   );
@@ -440,32 +371,34 @@ function DiscoverThemesSection() {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          marginBottom: '14px',
+          marginBottom: '16px',
         }}
       >
-        <h2 style={{ fontSize: '15px', fontWeight: 700, color: '#1a1a2e', margin: 0 }}>
+        <h2 style={{ fontSize: '16px', fontWeight: 600, color: '#fafafa', margin: 0 }}>
           Discover themes
         </h2>
         <Link
           href="/marketplace"
-          style={{ fontSize: '13px', fontWeight: 600, color: '#f59e0b', textDecoration: 'none' }}
+          style={{ fontSize: '13px', fontWeight: 600, color: '#6366f1', textDecoration: 'none' }}
         >
           Visit Marketplace
         </Link>
       </div>
 
+      {/* AI suggestion card */}
       <div
         style={{
-          background: '#ffffff',
-          borderRadius: '8px',
+          background: '#1c1c1f',
+          border: '1px solid #2a2a2f',
+          borderRadius: '10px',
           padding: '20px',
           marginBottom: '16px',
         }}
       >
-        <div style={{ fontSize: '14px', fontWeight: 600, color: '#1a1a2e', marginBottom: '4px' }}>
-          Generate a custom storefront
+        <div style={{ fontSize: '14px', fontWeight: 600, color: '#fafafa', marginBottom: '4px' }}>
+          Generate a custom theme
         </div>
-        <div style={{ fontSize: '13px', color: '#64748b', marginBottom: '14px' }}>
+        <div style={{ fontSize: '13px', color: '#71717a', marginBottom: '14px' }}>
           Describe your business to get tailored theme options
         </div>
         <div style={{ display: 'flex', gap: '8px' }}>
@@ -476,19 +409,19 @@ function DiscoverThemesSection() {
             style={{
               flex: 1,
               padding: '9px 12px',
-              border: '1px solid #e2e8f0',
+              background: '#0f0f11',
+              border: '1px solid #2a2a2f',
               borderRadius: '6px',
               fontSize: '13px',
-              color: '#1a1a2e',
+              color: '#fafafa',
               outline: 'none',
-              background: '#ffffff',
             }}
           />
           <Link
             href="/marketplace"
             style={{
               padding: '9px 18px',
-              background: '#f59e0b',
+              background: '#6366f1',
               color: '#ffffff',
               borderRadius: '6px',
               textDecoration: 'none',
@@ -504,6 +437,7 @@ function DiscoverThemesSection() {
         </div>
       </div>
 
+      {/* Theme cards grid */}
       <div
         style={{
           display: 'grid',
@@ -517,10 +451,10 @@ function DiscoverThemesSection() {
             <div
               key={theme.slug}
               style={{
-                background: '#ffffff',
+                background: '#1c1c1f',
+                border: '1px solid #2a2a2f',
                 borderRadius: '8px',
                 overflow: 'hidden',
-                boxShadow: '0 1px 2px rgba(0,0,0,0.08)',
               }}
             >
               <Link
@@ -528,7 +462,7 @@ function DiscoverThemesSection() {
                 style={{
                   display: 'block',
                   position: 'relative',
-                  height: '160px',
+                  height: '180px',
                   textDecoration: 'none',
                 }}
               >
@@ -537,7 +471,7 @@ function DiscoverThemesSection() {
                   alt={theme.name}
                   fill
                   style={{ objectFit: 'cover' }}
-                  sizes="(max-width: 1100px) 25vw, 260px"
+                  sizes="(max-width: 1100px) 25vw, 240px"
                 />
               </Link>
               <div
@@ -552,9 +486,9 @@ function DiscoverThemesSection() {
                   <Link
                     href={`/marketplace/${theme.slug}`}
                     style={{
-                      fontSize: '14px',
+                      fontSize: '13px',
                       fontWeight: 600,
-                      color: '#1a1a2e',
+                      color: '#fafafa',
                       textDecoration: 'none',
                       display: 'block',
                       marginBottom: '2px',
@@ -565,7 +499,7 @@ function DiscoverThemesSection() {
                   <span
                     style={{
                       fontSize: '12px',
-                      color: theme.price === 0 ? '#16a34a' : '#64748b',
+                      color: theme.price === 0 ? '#22c55e' : '#71717a',
                       fontWeight: theme.price === 0 ? 600 : 400,
                     }}
                   >
@@ -576,12 +510,12 @@ function DiscoverThemesSection() {
                   href={`/login?theme=${theme.slug}`}
                   style={{
                     display: 'inline-block',
-                    border: '1px solid #d1d5db',
+                    border: '1px solid #2a2a2f',
                     borderRadius: '6px',
-                    padding: '5px 14px',
-                    fontSize: '13px',
-                    color: '#374151',
-                    background: '#ffffff',
+                    padding: '5px 12px',
+                    fontSize: '12px',
+                    color: '#a1a1aa',
+                    background: 'transparent',
                     textDecoration: 'none',
                     fontWeight: 500,
                   }}
@@ -596,22 +530,22 @@ function DiscoverThemesSection() {
         {/* Explore more card */}
         <div
           style={{
-            background: '#ffffff',
-            border: '1px solid #e2e8f0',
+            background: '#1c1c1f',
+            border: '1px solid #2a2a2f',
             borderRadius: '8px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '32px 24px',
+            padding: '32px 20px',
             textAlign: 'center',
           }}
         >
           <div
             style={{
-              fontSize: '15px',
+              fontSize: '14px',
               fontWeight: 600,
-              color: '#1a1a2e',
+              color: '#fafafa',
               marginBottom: '8px',
             }}
           >
@@ -619,13 +553,13 @@ function DiscoverThemesSection() {
           </div>
           <div
             style={{
-              fontSize: '13px',
-              color: '#64748b',
+              fontSize: '12px',
+              color: '#71717a',
               marginBottom: '16px',
               lineHeight: '1.5',
             }}
           >
-            Browse professionally designed free and paid themes
+            Browse free and paid themes for every industry
           </div>
           <Link
             href="/marketplace"
@@ -633,22 +567,22 @@ function DiscoverThemesSection() {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '6px',
-              border: '1px solid #e2e8f0',
+              border: '1px solid #2a2a2f',
               borderRadius: '6px',
-              padding: '8px 16px',
-              fontSize: '13px',
-              color: '#374151',
-              background: '#ffffff',
+              padding: '7px 14px',
+              fontSize: '12px',
+              color: '#a1a1aa',
+              background: 'transparent',
               textDecoration: 'none',
               fontWeight: 500,
             }}
           >
             <svg
-              width="13"
-              height="13"
+              width="12"
+              height="12"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="#374151"
+              stroke="#a1a1aa"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -683,31 +617,28 @@ export default function DashboardPage() {
   const currentSite = websites.length > 0 ? websites[0] : null;
 
   return (
-    <div style={{ background: '#f4f4f4', minHeight: 'calc(100vh - 56px)' }}>
-      <div style={{ padding: '32px' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
-          <SearchBar />
-          <AnalyticsBar />
-          <CurrentThemeSection website={loading ? null : currentSite} />
-          <DraftThemesSection />
-          <DiscoverThemesSection />
-          <div
-            style={{
-              textAlign: 'center',
-              marginTop: '32px',
-              paddingBottom: '32px',
-              fontSize: '13px',
-              color: '#64748b',
-            }}
+    <div style={{ background: '#0f0f11', minHeight: 'calc(100vh - 52px)', padding: '32px' }}>
+      <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+        <AnalyticsBar />
+        <CurrentThemeSection website={loading ? null : currentSite} />
+        <DraftThemesSection />
+        <DiscoverThemesSection />
+        <div
+          style={{
+            textAlign: 'center',
+            marginTop: '32px',
+            paddingBottom: '32px',
+            fontSize: '13px',
+            color: '#52525b',
+          }}
+        >
+          Learn more about{' '}
+          <Link
+            href="/marketplace"
+            style={{ color: '#6366f1', textDecoration: 'none', fontWeight: 500 }}
           >
-            Learn more about{' '}
-            <Link
-              href="/marketplace"
-              style={{ color: '#f59e0b', textDecoration: 'none', fontWeight: 500 }}
-            >
-              themes
-            </Link>
-          </div>
+            themes
+          </Link>
         </div>
       </div>
     </div>
